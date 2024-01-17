@@ -2,18 +2,84 @@ package bo.umss.app.in;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Product {
 
+	public static final String INVALID_CODE_PRODUCT = "Code product can not be null";
+	public static final String INVALID_DESCRIPTION = "Description can not be null";
+	public static final String INVALID_AMOUNT = "Amount can not be zero or negative";
+	public static final String INVALID_PRICE_COST = "Price cost can not be zero or negative";
+	public static final String INVALID_PRICE_SALE = "Price sale can not be zero or negative";
+	public static final String INVALID_CONCEPT = "Concept can not be empty";
+	public static final String ALREADY_CODE_PRODUCT = "Code product already exists";
+
 	private String concept;
 	private CodeProduct codeProduct;
+	private Integer amount;
+	private Integer priceCost;
+	private Integer priceSale;
+	private List<ChangePrice> listChangePriceCost;
 	private List<Transaction> listTransaction;
 
-	public Product(String concept, CodeProduct codeProduct) {
+	public Product(String concept, CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
 		this.concept = concept;
 		this.codeProduct = codeProduct;
-		listTransaction = new ArrayList<>();
+		this.amount = amount;
+		this.priceCost = priceCost;
+		this.priceSale = priceSale;
+		this.listChangePriceCost = new ArrayList<>();
+		this.listTransaction = new ArrayList<>();
+	}
+
+	public static Product at(String concept, CodeProduct codeProduct, Integer amount, Integer priceCost,
+			Integer priceSale) {
+		if (concept.isEmpty())
+			throw new RuntimeException(INVALID_CONCEPT);
+		if (null == codeProduct)
+			throw new RuntimeException(INVALID_CODE_PRODUCT);
+		if (0 >= amount)
+			throw new RuntimeException(INVALID_AMOUNT);
+		if (0 >= priceCost)
+			throw new RuntimeException(INVALID_PRICE_COST);
+		if (0 >= priceSale)
+			throw new RuntimeException(INVALID_PRICE_SALE);
+
+		return new Product(concept, codeProduct, amount, priceCost, priceSale);
+	}
+
+	public String getConcept() {
+		return concept;
+	}
+
+	public CodeProduct getCodeProduct() {
+		return codeProduct;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public Integer getPriceCost() {
+		return priceCost;
+	}
+
+	
+	public void setPriceCost(Integer priceCost) {
+		this.priceCost = priceCost;
+	}
+
+	public Integer getPriceSale() {
+		return priceSale;
+	}
+
+	public List<ChangePrice> getListChangePriceCost() {
+		return listChangePriceCost;
+	}
+
+	public List<Transaction> getListTransaction() {
+		return listTransaction;
 	}
 
 	public Boolean verifyConceptIsNotEmpty() {
@@ -21,31 +87,49 @@ public class Product {
 	}
 
 	public Boolean canAddAnyTransaction() {
-		Measurement measurement = Measurement.at("cm1", "nm1");
-		Line line = Line.at("cl1", "nl1");
-		Coin coin = Coin.at("co1", "i1");
-		codeProduct = CodeProduct.at("c2", "description2", measurement, line, coin);
 		return codeProduct.existCode();
 	}
 
 	public Boolean compareGreatherThanZero(Integer count) {
-		return listTransaction.size() > count;
+		return listTransaction.size() >= count;
 	}
 
 	public Boolean alreadyCodeProduct() {
-		return codeProduct != null;
+		return null != codeProduct;
+	}
+
+	public Boolean amountGreatherThanZero() {
+		return amount > 0;
 	}
 
 	public void addBuy(Buy buy) {
-		if (buy.amountGreatherThanZero()) {
+		if (amountGreatherThanZero()) {
+			Optional<Transaction> buyOptional = listTransaction.stream()
+					.filter(item -> item instanceof Buy && ((Buy) item).getProduct().getCodeProduct().getCode()
+							.equals(buy.getProduct().getCodeProduct().getCode()))
+					.findAny();
+			if (buyOptional.isPresent())
+				throw new RuntimeException(Product.ALREADY_CODE_PRODUCT);
+
 			listTransaction.add(buy);
 		}
 	}
 
 	public Boolean wasAddAnyBuy(CodeProduct codeProduct) {
-		List<Transaction> filterBuy = listTransaction.stream().filter(
-				item -> item instanceof Buy && ((Buy) item).getCodeProduct().getCode().equals(codeProduct.getCode()))
+		List<Transaction> filterBuy = listTransaction.stream()
+				.filter(item -> item instanceof Buy
+						&& ((Buy) item).getProduct().getCodeProduct().getCode().equals(codeProduct.getCode()))
 				.collect(Collectors.toList());
 		return filterBuy.size() > 0;
+	}
+
+	public Boolean canIncreaseAmount(Integer potencialAmount) {
+		return amount >= potencialAmount;
+	}
+
+	public void todoIncreaseAmount(Integer potencialAmount) {
+		if (this.canIncreaseAmount(potencialAmount)) {
+			amount = amount - potencialAmount;
+		}
 	}
 }

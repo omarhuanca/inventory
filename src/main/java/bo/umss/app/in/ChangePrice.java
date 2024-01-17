@@ -12,7 +12,7 @@ public class ChangePrice {
 	private Integer oldPrice;
 	private LocalDate currentDate;
 
-	private ChangePrice(Integer currentPrice, Integer oldPrice, LocalDate currentDate) {
+	public ChangePrice(Integer currentPrice, Integer oldPrice, LocalDate currentDate) {
 		this.currentPrice = currentPrice;
 		this.oldPrice = oldPrice;
 		this.currentDate = currentDate;

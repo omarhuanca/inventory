@@ -14,7 +14,7 @@ public class CodeProduct {
 	private Line line;
 	private Coin coin;
 
-	private CodeProduct(String code, String description, Measurement measurement, Line line, Coin coin) {
+	public CodeProduct(String code, String description, Measurement measurement, Line line, Coin coin) {
 		this.code = code;
 		this.description = description;
 		this.measurement = measurement;
@@ -58,7 +58,11 @@ public class CodeProduct {
 	}
 
 	public Boolean existCode() {
-		return true;
+		return code.isEmpty();
+	}
+
+	public Boolean compareAnotherCode(CodeProduct otherCodeProduct) {
+		return code.equals(otherCodeProduct.getCode());
 	}
 
 }

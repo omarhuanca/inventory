@@ -8,7 +8,7 @@ public class Measurement {
 	private String code;
 	private String name;
 
-	private Measurement(String code, String name) {
+	public Measurement(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}

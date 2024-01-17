@@ -8,7 +8,7 @@ public class Line {
 	private String code;
 	private String name;
 
-	private Line(String code, String name) {
+	public Line(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}
