@@ -11,14 +11,21 @@ public class Inventory {
 
 	public static final String NOT_REGISTER_CODE_PRODUCT = "Code product was not added to any transaction";
 
+	public static final String INVALID_ADD_PRODUCT_TWO_TIMES = "Product can not be add two times";
+
 	private List<Product> listProduct;
 
 	public Inventory() {
 		this.listProduct = new ArrayList<>();
 	}
 
-	public void addProductBuy(Product product) {
+	public void addBuyTransaction(Product product) {
 		if (product.compareGreatherThanZero(0) && product.alreadyCodeProduct()) {
+			Optional<Product> productOptional = listProduct.stream()
+					.filter(item -> item.getCodeProduct().compareAnotherCode(product.getCodeProduct())).findAny();
+			if (productOptional.isPresent()) {
+				throw new RuntimeException(Inventory.INVALID_ADD_PRODUCT_TWO_TIMES);
+			}
 			listProduct.add(product);
 		}
 	}

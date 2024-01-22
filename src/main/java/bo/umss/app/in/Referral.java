@@ -5,7 +5,6 @@ public class Referral {
 	public static final String INVALID_CODE_PRODUCT = "Code product cant not be null";
 	public static final String INVALID_AMOUNT = "Amount can not be greather than zero or equal to zero";
 
-
 	public CodeProduct codeProduct;
 	public Integer amount;
 

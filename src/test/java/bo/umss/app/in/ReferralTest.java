@@ -16,8 +16,9 @@ public class ReferralTest {
 		Measurement measurement = Measurement.at("piece", "Unit");
 		Line line = Line.at("plate", "family's plate");
 		Coin coin = Coin.at("usd", "$");
-		CodeProduct codeProduct = CodeProduct.at("PLA-1", "bolw8 a round plate of porcelain", measurement, line, coin);
+		CodeProduct codeProduct = CodeProduct.at("PLA-1", "bowl8 a round plate of porcelain", measurement, line, coin);
 
 		assertThrows(RuntimeException.class, () -> Referral.at(codeProduct, -1), Referral.INVALID_AMOUNT);
 	}
+
 }

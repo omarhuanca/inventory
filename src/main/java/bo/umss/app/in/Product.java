@@ -12,10 +12,8 @@ public class Product {
 	public static final String INVALID_AMOUNT = "Amount can not be zero or negative";
 	public static final String INVALID_PRICE_COST = "Price cost can not be zero or negative";
 	public static final String INVALID_PRICE_SALE = "Price sale can not be zero or negative";
-	public static final String INVALID_CONCEPT = "Concept can not be empty";
 	public static final String ALREADY_CODE_PRODUCT = "Code product already exists";
 
-	private String concept;
 	private CodeProduct codeProduct;
 	private Integer amount;
 	private Integer priceCost;
@@ -23,8 +21,7 @@ public class Product {
 	private List<ChangePrice> listChangePriceCost;
 	private List<Transaction> listTransaction;
 
-	public Product(String concept, CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
-		this.concept = concept;
+	public Product(CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
 		this.codeProduct = codeProduct;
 		this.amount = amount;
 		this.priceCost = priceCost;
@@ -33,10 +30,8 @@ public class Product {
 		this.listTransaction = new ArrayList<>();
 	}
 
-	public static Product at(String concept, CodeProduct codeProduct, Integer amount, Integer priceCost,
+	public static Product at(CodeProduct codeProduct, Integer amount, Integer priceCost,
 			Integer priceSale) {
-		if (concept.isEmpty())
-			throw new RuntimeException(INVALID_CONCEPT);
 		if (null == codeProduct)
 			throw new RuntimeException(INVALID_CODE_PRODUCT);
 		if (0 >= amount)
@@ -46,11 +41,7 @@ public class Product {
 		if (0 >= priceSale)
 			throw new RuntimeException(INVALID_PRICE_SALE);
 
-		return new Product(concept, codeProduct, amount, priceCost, priceSale);
-	}
-
-	public String getConcept() {
-		return concept;
+		return new Product(codeProduct, amount, priceCost, priceSale);
 	}
 
 	public CodeProduct getCodeProduct() {
@@ -80,10 +71,6 @@ public class Product {
 
 	public List<Transaction> getListTransaction() {
 		return listTransaction;
-	}
-
-	public Boolean verifyConceptIsNotEmpty() {
-		return concept.isBlank();
 	}
 
 	public Boolean canAddAnyTransaction() {

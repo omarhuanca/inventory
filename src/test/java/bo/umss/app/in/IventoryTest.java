@@ -8,20 +8,6 @@ import org.junit.jupiter.api.Test;
 
 public class IventoryTest {
 
-	private final String POSSIBLE_PURCHASE_MERCHANDISE = "Possible purchase of kitchen utensils";
-
-	@Test
-	public void conceptCanNotBeEmpty() {
-		Measurement measurement = Measurement.at("pza", "piece");
-		Line line = Line.at("plate1", "plate");
-		Coin coin = Coin.at("coin1", "USD");
-		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
-
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
-
-		assertFalse(product.verifyConceptIsNotEmpty());
-	}
-
 	@Test
 	public void codeProductAlreadyExistPrevious() {
 		Measurement measurement = Measurement.at("pza", "piece");
@@ -29,7 +15,7 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		assertFalse(product.canAddAnyTransaction());
 	}
@@ -41,7 +27,7 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		Buy buy = Buy.at("purchase porcelain plates", product);
 		product.addBuy(buy);
@@ -51,13 +37,12 @@ public class IventoryTest {
 
 	@Test
 	public void addTwoSameTimeProduct() {
-
 		Measurement measurement = Measurement.at("pza", "piece");
 		Line line = Line.at("plate1", "plate");
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		Buy buy = Buy.at("purchase porcelain plates", product);
 		product.addBuy(buy);
@@ -74,7 +59,7 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		Buy buy = Buy.at("purchase porcelain plates", product);
 		buy.changePriceBuy(8);
@@ -90,7 +75,7 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		Buy buy = Buy.at("purchase porcelain plates", product);
 		buy.changePriceBuy(8);
@@ -106,7 +91,7 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 10);
+		Product product = Product.at(codeProduct, 1, 5, 10);
 
 		Buy buy = Buy.at("purchase porcelain plates", product);
 		product.addBuy(buy);
@@ -114,10 +99,26 @@ public class IventoryTest {
 		Referral referral = Referral.at(product.getCodeProduct(), 2);
 
 		Inventory inventory = new Inventory();
-		inventory.addProductBuy(product);
+		inventory.addBuyTransaction(product);
 
 		assertThrows(RuntimeException.class, () -> inventory.withdrawProductReferral(referral),
 				Inventory.QUANTITY_GREATHER_THAN_AVAILABLE);
+	}
+
+	@Test
+	public void addBuySameCodeProductTwoTimes() {
+		Measurement measurement = Measurement.at("pza", "piece");
+		Line line = Line.at("plate1", "plate");
+		Coin coin = Coin.at("coin1", "USD");
+		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
+
+		Product product = Product.at(codeProduct, 1, 5, 10);
+
+		Inventory inventory = new Inventory();
+		inventory.addBuyTransaction(product);
+
+		assertThrows(RuntimeException.class, () -> inventory.addBuyTransaction(product),
+				Inventory.INVALID_ADD_PRODUCT_TWO_TIMES);
 	}
 
 	@Test
@@ -127,10 +128,10 @@ public class IventoryTest {
 		Coin coin = Coin.at("coin1", "USD");
 		CodeProduct codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 
-		Product product = Product.at(POSSIBLE_PURCHASE_MERCHANDISE, codeProduct, 1, 5, 10);
+		Product product = Product.at(codeProduct, 1, 5, 10);
 		
 		Inventory inventory = new Inventory();
-	    inventory.addProductBuy(product);
+	    inventory.addBuyTransaction(product);
 
 		assertThrows(RuntimeException.class, () -> inventory.canAddReferralTransaction(codeProduct),
 				Inventory.NOT_REGISTER_CODE_PRODUCT);

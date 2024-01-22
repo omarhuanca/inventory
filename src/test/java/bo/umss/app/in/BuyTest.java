@@ -9,7 +9,7 @@ public class BuyTest {
 
 	@Test
 	public void codeProductCanNotBeNull() {
-		assertThrows(RuntimeException.class, () -> Buy.at("bolw7 a round plate of porcelain", null),
+		assertThrows(RuntimeException.class, () -> Buy.at("bowl7 a round plate of porcelain", null),
 				Buy.INVALID_PRODUCT);
 	}
 
@@ -20,7 +20,7 @@ public class BuyTest {
 		Coin coin = Coin.at("usd", "$");
 		CodeProduct codeProduct = CodeProduct.at("PLA-1", "bolw8 a round plate of porcelain", measurement, line, coin);
 
-		Product product = Product.at("", codeProduct, 1, 5, 6);
+		Product product = Product.at(codeProduct, 1, 5, 6);
 
 		assertThrows(RuntimeException.class, () -> Buy.at("", product), Buy.INVALID_DESCRIPTION);
 	}
