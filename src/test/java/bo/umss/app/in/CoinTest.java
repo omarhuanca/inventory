@@ -8,11 +8,11 @@ public class CoinTest {
 
 	@Test
 	public void test1() {
-		assertThrows(RuntimeException.class, () -> Coin.at("cm1", ""), Coin.INVALID_INITIAL);
+		assertThrows(RuntimeException.class, () -> Coin.at(Coin.CODE_USA, ""), Coin.INVALID_INITIAL);
 	}
 
 	@Test
 	public void test2() {
-		assertThrows(RuntimeException.class, () -> Coin.at("", "bs"), Coin.INVALID_CODE);
+		assertThrows(RuntimeException.class, () -> Coin.at("", Coin.NAME_USA), Coin.INVALID_CODE);
 	}
 }

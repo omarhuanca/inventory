@@ -8,11 +8,11 @@ public class LineTest {
 
 	@Test
 	public void test1() {
-		assertThrows(RuntimeException.class, ()->Line.at("cl1", ""), Line.INVALID_NAME);
+		assertThrows(RuntimeException.class, ()->Line.at(Line.CODE_PLATE, ""), Line.INVALID_NAME);
 	}
 	
 	@Test
 	public void test2() {
-		assertThrows(RuntimeException.class, ()->Line.at("", "n1"), Line.INVALID_CODE);
+		assertThrows(RuntimeException.class, ()->Line.at("", Line.NAME_PLATE), Line.INVALID_CODE);
 	}
 }

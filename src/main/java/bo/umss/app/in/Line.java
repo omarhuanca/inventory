@@ -4,6 +4,10 @@ public class Line {
 
 	public static final String INVALID_CODE = "Code can not be blank";
 	public static final String INVALID_NAME = "Name can not be blank";
+	public static final String CODE_PLATE = "pla1";
+	public static final String NAME_PLATE = "bowl8 porcelain";
+	public static final String CODE_CUP = "cup-1";
+	public static final String NAME_CUP = "cup porcelain isaylin";
 
 	private String code;
 	private String name;

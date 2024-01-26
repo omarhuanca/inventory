@@ -8,11 +8,11 @@ public class MeasurementTest {
 
 	@Test
 	public void test1() {
-		assertThrows(RuntimeException.class, ()->Measurement.at("cm1", ""), Measurement.INVALID_NAME);
+		assertThrows(RuntimeException.class, () -> Measurement.at(Measurement.CODE_PZA, ""), Measurement.INVALID_NAME);
 	}
 
 	@Test
 	public void test2() {
-		assertThrows(RuntimeException.class, ()->Measurement.at("", "n1"), Measurement.INVALID_CODE);
+		assertThrows(RuntimeException.class, () -> Measurement.at("", Measurement.NAME_PZA), Measurement.INVALID_CODE);
 	}
 }

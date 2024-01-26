@@ -7,6 +7,8 @@ public class CodeProduct {
 	public static final String INVALID_MEASUREMENT = "Measurement can not be null";
 	public static final String INVALID_LINE = "Line can not be null";
 	public static final String INVALID_COIN = "Coin can not be null";
+	public static final String DEFINE_CODE_PRODUCT = "PLA-1";
+	public static final String DEFINE_DESCRIPTION = "bowl8 porcelain plate";
 
 	private String code;
 	private String description;

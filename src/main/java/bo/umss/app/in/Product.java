@@ -1,11 +1,8 @@
 package bo.umss.app.in;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class Product {
+public abstract class Product {
 
 	public static final String INVALID_CODE_PRODUCT = "Code product can not be null";
 	public static final String INVALID_DESCRIPTION = "Description can not be null";
@@ -14,109 +11,42 @@ public class Product {
 	public static final String INVALID_PRICE_SALE = "Price sale can not be zero or negative";
 	public static final String ALREADY_CODE_PRODUCT = "Code product already exists";
 
-	private CodeProduct codeProduct;
-	private Integer amount;
-	private Integer priceCost;
-	private Integer priceSale;
-	private List<ChangePrice> listChangePriceCost;
-	private List<Transaction> listTransaction;
+	protected CodeProduct codeProduct;
+	protected Integer amount;
+	protected Integer priceCost;
+	protected Integer priceSale;
+	protected List<ChangePrice> listChangePriceCost;
+	protected List<Transaction> listTransaction;
 
-	public Product(CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
-		this.codeProduct = codeProduct;
-		this.amount = amount;
-		this.priceCost = priceCost;
-		this.priceSale = priceSale;
-		this.listChangePriceCost = new ArrayList<>();
-		this.listTransaction = new ArrayList<>();
-	}
+	// start method get
+	public abstract CodeProduct getCodeProduct();
 
-	public static Product at(CodeProduct codeProduct, Integer amount, Integer priceCost,
-			Integer priceSale) {
-		if (null == codeProduct)
-			throw new RuntimeException(INVALID_CODE_PRODUCT);
-		if (0 >= amount)
-			throw new RuntimeException(INVALID_AMOUNT);
-		if (0 >= priceCost)
-			throw new RuntimeException(INVALID_PRICE_COST);
-		if (0 >= priceSale)
-			throw new RuntimeException(INVALID_PRICE_SALE);
+	public abstract Integer getAmount();
 
-		return new Product(codeProduct, amount, priceCost, priceSale);
-	}
+	public abstract Integer getPriceCost();
 
-	public CodeProduct getCodeProduct() {
-		return codeProduct;
-	}
-
-	public Integer getAmount() {
-		return amount;
-	}
-
-	public Integer getPriceCost() {
-		return priceCost;
-	}
-
+	public abstract void setPriceCost(Integer priceCost);
 	
-	public void setPriceCost(Integer priceCost) {
-		this.priceCost = priceCost;
-	}
+	public abstract Integer getPriceSale();
 
-	public Integer getPriceSale() {
-		return priceSale;
-	}
+	public abstract List<ChangePrice> getListChangePriceCost();
 
-	public List<ChangePrice> getListChangePriceCost() {
-		return listChangePriceCost;
-	}
+	public abstract List<Transaction> getListTransaction();
 
-	public List<Transaction> getListTransaction() {
-		return listTransaction;
-	}
+	// start method product
+	public abstract Boolean canAddAnyTransaction();
 
-	public Boolean canAddAnyTransaction() {
-		return codeProduct.existCode();
-	}
+	public abstract Boolean listTransactionCompareGreatherThanZero(Integer count);
 
-	public Boolean compareGreatherThanZero(Integer count) {
-		return listTransaction.size() >= count;
-	}
+	public abstract Boolean alreadyCodeProduct();
 
-	public Boolean alreadyCodeProduct() {
-		return null != codeProduct;
-	}
+	public abstract Boolean amountGreatherThanZero();
 
-	public Boolean amountGreatherThanZero() {
-		return amount > 0;
-	}
+	public abstract void addBuy(Buy buy);
 
-	public void addBuy(Buy buy) {
-		if (amountGreatherThanZero()) {
-			Optional<Transaction> buyOptional = listTransaction.stream()
-					.filter(item -> item instanceof Buy && ((Buy) item).getProduct().getCodeProduct().getCode()
-							.equals(buy.getProduct().getCodeProduct().getCode()))
-					.findAny();
-			if (buyOptional.isPresent())
-				throw new RuntimeException(Product.ALREADY_CODE_PRODUCT);
+	public abstract Boolean wasAddAnyBuy(CodeProduct codeProduct);
 
-			listTransaction.add(buy);
-		}
-	}
+	public abstract Boolean canIncreaseAmount(Integer potencialAmount);
 
-	public Boolean wasAddAnyBuy(CodeProduct codeProduct) {
-		List<Transaction> filterBuy = listTransaction.stream()
-				.filter(item -> item instanceof Buy
-						&& ((Buy) item).getProduct().getCodeProduct().getCode().equals(codeProduct.getCode()))
-				.collect(Collectors.toList());
-		return filterBuy.size() > 0;
-	}
-
-	public Boolean canIncreaseAmount(Integer potencialAmount) {
-		return amount >= potencialAmount;
-	}
-
-	public void todoIncreaseAmount(Integer potencialAmount) {
-		if (this.canIncreaseAmount(potencialAmount)) {
-			amount = amount - potencialAmount;
-		}
-	}
+	public abstract void todoIncreaseAmount(Integer potencialAmount);
 }

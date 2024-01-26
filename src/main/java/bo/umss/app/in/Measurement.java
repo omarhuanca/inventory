@@ -4,6 +4,8 @@ public class Measurement {
 
 	public static final String INVALID_CODE = "Code can not be blank";
 	public static final String INVALID_NAME = "Name can not be blank";
+	public static final String CODE_PZA = "pza";
+	public static final String NAME_PZA = "piece";
 
 	private String code;
 	private String name;

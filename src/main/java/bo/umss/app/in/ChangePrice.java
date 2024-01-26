@@ -6,7 +6,7 @@ public class ChangePrice {
 
 	public static final String INVALID_CURRENT_PRICE = "Current price can not be zero";
 	public static final String INVALID_OLD_PRICE = "Old price can not be zero";
-	private static final String INVALID_OLD_GRATHER_CURRENT_PRICE = "Old price can not be greather than current price";
+	public static final String INVALID_OLD_GRATHER_CURRENT_PRICE = "Old price can not be greather than current price";
 
 	private Integer currentPrice;
 	private Integer oldPrice;
