@@ -1,10 +1,16 @@
-package bo.umss.app.in;
+package bo.umss.app.in.plate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import bo.umss.app.in.Product;
+import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.coin.Coin;
+import bo.umss.app.in.line.Line;
+import bo.umss.app.in.measurement.Measurement;
 
 public class PlateTest {
 

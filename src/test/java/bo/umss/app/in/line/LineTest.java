@@ -1,8 +1,10 @@
-package bo.umss.app.in;
+package bo.umss.app.in.line;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
+import bo.umss.app.in.line.Line;
 
 public class LineTest {
 

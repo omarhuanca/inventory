@@ -1,4 +1,4 @@
-package bo.umss.app.in;
+package bo.umss.app.in.measurement;
 
 public class Measurement {
 
