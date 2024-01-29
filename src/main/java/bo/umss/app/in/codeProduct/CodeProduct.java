@@ -1,4 +1,8 @@
-package bo.umss.app.in;
+package bo.umss.app.in.codeProduct;
+
+import bo.umss.app.in.coin.Coin;
+import bo.umss.app.in.line.Line;
+import bo.umss.app.in.measurement.Measurement;
 
 public class CodeProduct {
 

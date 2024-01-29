@@ -1,6 +1,10 @@
-package bo.umss.app.in;
+package bo.umss.app.in.buy;
 
 import java.time.LocalDate;
+
+import bo.umss.app.in.Product;
+import bo.umss.app.in.Transaction;
+import bo.umss.app.in.changePrice.ChangePrice;
 
 public class Buy implements Transaction {
 

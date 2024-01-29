@@ -1,4 +1,4 @@
-package bo.umss.app.in;
+package bo.umss.app.in.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -7,6 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import bo.umss.app.in.Product;
+import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.coin.Coin;
+import bo.umss.app.in.cup.Cup;
+import bo.umss.app.in.line.Line;
+import bo.umss.app.in.measurement.Measurement;
+import bo.umss.app.in.plate.Plate;
+import bo.umss.app.in.referral.Referral;
 
 public class IventoryTest {
 

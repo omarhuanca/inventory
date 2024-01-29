@@ -1,4 +1,7 @@
-package bo.umss.app.in;
+package bo.umss.app.in.referral;
+
+import bo.umss.app.in.Transaction;
+import bo.umss.app.in.codeProduct.CodeProduct;
 
 public class Referral implements Transaction {
 

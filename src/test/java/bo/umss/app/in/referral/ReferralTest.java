@@ -1,8 +1,14 @@
-package bo.umss.app.in;
+package bo.umss.app.in.referral;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
+import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.coin.Coin;
+import bo.umss.app.in.line.Line;
+import bo.umss.app.in.measurement.Measurement;
+import bo.umss.app.in.referral.Referral;
 
 public class ReferralTest {
 

@@ -1,4 +1,4 @@
-package bo.umss.app.in;
+package bo.umss.app.in.changePrice;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

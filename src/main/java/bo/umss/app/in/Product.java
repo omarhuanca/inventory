@@ -2,6 +2,10 @@ package bo.umss.app.in;
 
 import java.util.List;
 
+import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.changePrice.ChangePrice;
+import bo.umss.app.in.codeProduct.CodeProduct;
+
 public abstract class Product {
 
 	public static final String INVALID_CODE_PRODUCT = "Code product can not be null";
