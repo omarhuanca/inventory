@@ -29,7 +29,7 @@ public class IventoryTest {
 		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
 		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
 		codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
-		plate = Plate.at(codeProduct, 2, 5, 10);
+		plate = Plate.at(codeProduct, 10, 5, 10);
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class IventoryTest {
 	public void changePriceCostAfterIncreaseValueTwoTimes() {
 		Buy buy = Buy.at("purchase porcelain plates", plate);
 		buy.changePriceBuy(8);
-		buy.changePriceBuy(6);
+		buy.changePriceBuy(4);
 
 		assertTrue(buy.getProduct().getListChangePriceCost().size() == 1);
 	}
@@ -95,7 +95,8 @@ public class IventoryTest {
 		Buy buy = Buy.at("purchase porcelain plates", plate);
 		plate.addBuy(buy);
 
-		Referral referral = Referral.at(plate.getCodeProduct(), 3);
+		// The amount referal should be greather than amount product
+		Referral referral = Referral.at(plate.getCodeProduct(), 15);
 
 		Inventory inventory = new Inventory();
 		inventory.addBuyTransaction(plate);
