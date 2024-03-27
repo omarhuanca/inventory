@@ -78,7 +78,7 @@ public class Plate extends Product {
 
 	@Override
 	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
-		return listTransaction.size() >= count;
+		return listTransaction.size() > count;
 	}
 
 	@Override
@@ -109,8 +109,9 @@ public class Plate extends Product {
 	public Boolean wasAddAnyBuy(CodeProduct codeProduct) {
 		List<Transaction> filterBuy = listTransaction.stream()
 				.filter(item -> item instanceof Buy
-						&& ((Buy) item).getProduct().getCodeProduct().getCode().equals(codeProduct.getCode()))
+						&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(codeProduct))
 				.collect(Collectors.toList());
+
 		return filterBuy.size() > 0;
 	}
 

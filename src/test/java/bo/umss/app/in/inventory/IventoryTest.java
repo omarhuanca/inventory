@@ -22,12 +22,15 @@ public class IventoryTest {
 
 	public CodeProduct codeProduct;
 	public Product plate;
+	public Measurement measurement;
+	public Coin coin;
+	public Line line;
 
 	@BeforeEach
 	public void setUp() {
-		Measurement measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
-		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
-		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
+		measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
+		line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
+		coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
 		codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
 		plate = Plate.at(codeProduct, 10, 5, 10);
 	}
@@ -73,29 +76,41 @@ public class IventoryTest {
 	}
 
 	@Test
-	public void addBuySameCodeProductTwoTimes() {
+	public void tryAddProductWithoutTransaction() {
 		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
 
-		assertThrows(RuntimeException.class, () -> inventory.addBuyTransaction(plate),
-				Inventory.INVALID_ADD_PRODUCT_TWO_TIMES);
+		assertThrows(RuntimeException.class, () -> inventory.addBuyTransaction(plate), Inventory.ITEM_CAN_NOT_EXIST);
 	}
 
 	@Test
-	public void canNotLetTodoReferralWithoutCodeProductPrevious() {
-		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
+	public void canNotLetWithdrawWithoutBuy() {
+		Referral referral = Referral.at(plate.getCodeProduct(), 15);
 
-		assertThrows(RuntimeException.class, () -> inventory.canAddReferralTransaction(codeProduct),
+		Inventory inventory = new Inventory();
+		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
 				Inventory.NOT_REGISTER_CODE_PRODUCT);
 	}
+
+	/*
+	 * @Test public void canNotLetTodoReferralWithoutCodeProductPrevious() { Buy buy
+	 * = Buy.at("purchase porcelain plates", plate); plate.addBuy(buy);
+	 * 
+	 * Referral referral = Referral.at(plate.getCodeProduct(), 15);
+	 * 
+	 * Inventory inventory = new Inventory();
+	 * inventory.withdrawReferralTransaction(referral);
+	 * 
+	 * assertThrows(RuntimeException.class, () ->
+	 * inventory.canAddReferralTransaction(codeProduct),
+	 * Inventory.NOT_REGISTER_CODE_PRODUCT); }
+	 */
 
 	@Test
 	public void toDoReferralAmountProduct() {
 		Buy buy = Buy.at("purchase porcelain plates", plate);
 		plate.addBuy(buy);
 
-		// The amount referal should be greather than amount product
+		// The amount referal should be greather than amount product Referral
 		Referral referral = Referral.at(plate.getCodeProduct(), 15);
 
 		Inventory inventory = new Inventory();
@@ -107,12 +122,16 @@ public class IventoryTest {
 
 	@Test
 	public void addTwoDiferentProductInventory() {
-		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		Measurement measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
-		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		codeProduct = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+		Buy buy = Buy.at("purchase porcelain plates", plate);
+		plate.addBuy(buy);
 
-		Product cup = Cup.at(codeProduct, 10, 8, 16);
+		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
+		CodeProduct codeProduct2 = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+
+		Product cup = Cup.at(codeProduct2, 10, 8, 16);
+
+		Buy buy2 = Buy.at("purchase porcelain cupes", cup);
+		cup.addBuy(buy2);
 
 		Inventory inventory = new Inventory();
 		inventory.addBuyTransaction(plate);
@@ -123,12 +142,13 @@ public class IventoryTest {
 
 	@Test
 	public void tryAddReferralWithAddBuy() {
-		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		Measurement measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
-		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		codeProduct = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+		Buy buy = Buy.at("purchase porcelain plates", plate);
+		plate.addBuy(buy);
 
-		Product cup = Cup.at(codeProduct, 10, 8, 16);
+		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
+		CodeProduct codeProduct2 = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+
+		Product cup = Cup.at(codeProduct2, 10, 8, 16);
 
 		Referral referral = Referral.at(cup.getCodeProduct(), 5);
 
