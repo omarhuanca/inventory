@@ -91,20 +91,6 @@ public class IventoryTest {
 				Inventory.NOT_REGISTER_CODE_PRODUCT);
 	}
 
-	/*
-	 * @Test public void canNotLetTodoReferralWithoutCodeProductPrevious() { Buy buy
-	 * = Buy.at("purchase porcelain plates", plate); plate.addBuy(buy);
-	 * 
-	 * Referral referral = Referral.at(plate.getCodeProduct(), 15);
-	 * 
-	 * Inventory inventory = new Inventory();
-	 * inventory.withdrawReferralTransaction(referral);
-	 * 
-	 * assertThrows(RuntimeException.class, () ->
-	 * inventory.canAddReferralTransaction(codeProduct),
-	 * Inventory.NOT_REGISTER_CODE_PRODUCT); }
-	 */
-
 	@Test
 	public void toDoReferralAmountProduct() {
 		Buy buy = Buy.at("purchase porcelain plates", plate);
