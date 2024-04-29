@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import bo.umss.app.in.Product;
 import bo.umss.app.in.buy.Buy;
 import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.cup.Cup;
 import bo.umss.app.in.line.Line;
@@ -31,7 +32,7 @@ public class IventoryTest {
 		measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
 		line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
 		coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		codeProduct = CodeProduct.at("plate-1", "description", measurement, line, coin);
+		codeProduct = NotProvidedProvider.at("plate-1", "description", measurement, line, coin);
 		plate = Plate.at(codeProduct, 10, 5, 10);
 	}
 
@@ -112,9 +113,10 @@ public class IventoryTest {
 		plate.addBuy(buy);
 
 		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		CodeProduct codeProduct2 = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
+				line2, coin);
 
-		Product cup = Cup.at(codeProduct2, 10, 8, 16);
+		Product cup = Cup.at(notProvidedProvider2, 10, 8, 16);
 
 		Buy buy2 = Buy.at("purchase porcelain cupes", cup);
 		cup.addBuy(buy2);
@@ -132,9 +134,10 @@ public class IventoryTest {
 		plate.addBuy(buy);
 
 		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		CodeProduct codeProduct2 = CodeProduct.at("cup-1", "description cup", measurement, line2, coin);
+		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
+				line2, coin);
 
-		Product cup = Cup.at(codeProduct2, 10, 8, 16);
+		Product cup = Cup.at(notProvidedProvider2, 10, 8, 16);
 
 		Referral referral = Referral.at(cup.getCodeProduct(), 5);
 

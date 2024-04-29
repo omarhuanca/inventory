@@ -77,7 +77,7 @@ public class Cup extends Product {
 
 	@Override
 	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
-		return listTransaction.size() >= count;
+		return listTransaction.size() > count;
 	}
 
 	@Override
