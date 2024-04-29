@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
 
-public class CodeProductTest {
+public class NotProvidedProviderTest {
 
 	public Measurement measurement;
 	public Line line;
@@ -24,35 +23,34 @@ public class CodeProductTest {
 	}
 
 	@Test
-	public void test1() {
+	public void canNotCreateBlankCode() {
 		assertThrows(RuntimeException.class,
-				() -> CodeProduct.at("", CodeProduct.DEFINE_DESCRIPTION, measurement, line, coin),
+				() -> NotProvidedProvider.at("", CodeProduct.DEFINE_DESCRIPTION, measurement, line, coin),
 				CodeProduct.INVALID_CODE);
 	}
 
 	@Test
-	public void test2() {
+	public void canNotCreateBlankDescription() {
 		assertThrows(RuntimeException.class,
-				() -> CodeProduct.at(CodeProduct.DEFINE_CODE_PRODUCT, "", measurement, line, coin),
+				() -> NotProvidedProvider.at(CodeProduct.DEFINE_CODE_PRODUCT, "", measurement, line, coin),
 				CodeProduct.INVALID_DESCRIPTION);
 	}
 
 	@Test
-	public void test3() {
-		assertThrows(RuntimeException.class,
-				() -> CodeProduct.at(CodeProduct.DEFINE_CODE_PRODUCT, CodeProduct.DEFINE_DESCRIPTION, null, line, coin),
-				CodeProduct.INVALID_DESCRIPTION);
+	public void canNotCreateNullMeasurement() {
+		assertThrows(RuntimeException.class, () -> NotProvidedProvider.at(CodeProduct.DEFINE_CODE_PRODUCT,
+				CodeProduct.DEFINE_DESCRIPTION, null, line, coin), CodeProduct.INVALID_DESCRIPTION);
 	}
 
 	@Test
-	public void test4() {
-		assertThrows(RuntimeException.class, () -> CodeProduct.at(CodeProduct.DEFINE_CODE_PRODUCT,
+	public void canNotCreateNullLine() {
+		assertThrows(RuntimeException.class, () -> NotProvidedProvider.at(CodeProduct.DEFINE_CODE_PRODUCT,
 				CodeProduct.DEFINE_DESCRIPTION, measurement, null, coin), CodeProduct.INVALID_DESCRIPTION);
 	}
 
 	@Test
-	public void test5() {
-		assertThrows(RuntimeException.class, () -> CodeProduct.at(CodeProduct.DEFINE_CODE_PRODUCT,
+	public void canNotCreateNullCoin() {
+		assertThrows(RuntimeException.class, () -> NotProvidedProvider.at(CodeProduct.DEFINE_CODE_PRODUCT,
 				CodeProduct.DEFINE_DESCRIPTION, measurement, line, null), CodeProduct.INVALID_DESCRIPTION);
 	}
 }
