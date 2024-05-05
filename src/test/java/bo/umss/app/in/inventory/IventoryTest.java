@@ -8,15 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.Product;
 import bo.umss.app.in.buy.Buy;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
-import bo.umss.app.in.cup.Cup;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
-import bo.umss.app.in.plate.Plate;
+import bo.umss.app.in.product.Product;
 import bo.umss.app.in.referral.Referral;
 
 public class IventoryTest {
@@ -33,7 +31,7 @@ public class IventoryTest {
 		line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
 		coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
 		codeProduct = NotProvidedProvider.at("plate-1", "description", measurement, line, coin);
-		plate = Plate.at(codeProduct, 10, 5, 10);
+		plate = Product.at(codeProduct, 10, 5, 10);
 	}
 
 	@Test
@@ -116,7 +114,7 @@ public class IventoryTest {
 		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
 				line2, coin);
 
-		Product cup = Cup.at(notProvidedProvider2, 10, 8, 16);
+		Product cup = Product.at(notProvidedProvider2, 10, 8, 16);
 
 		Buy buy2 = Buy.at("purchase porcelain cupes", cup);
 		cup.addBuy(buy2);
@@ -137,7 +135,7 @@ public class IventoryTest {
 		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
 				line2, coin);
 
-		Product cup = Cup.at(notProvidedProvider2, 10, 8, 16);
+		Product cup = Product.at(notProvidedProvider2, 10, 8, 16);
 
 		Referral referral = Referral.at(cup.getCodeProduct(), 5);
 
