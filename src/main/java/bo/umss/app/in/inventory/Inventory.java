@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import bo.umss.app.in.Product;
 import bo.umss.app.in.Transaction;
 import bo.umss.app.in.buy.Buy;
 import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.product.Product;
 import bo.umss.app.in.referral.Referral;
 
 public class Inventory {

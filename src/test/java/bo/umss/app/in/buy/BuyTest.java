@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.Product;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
-import bo.umss.app.in.plate.Plate;
+import bo.umss.app.in.product.Product;
 
 public class BuyTest {
 
@@ -27,7 +26,7 @@ public class BuyTest {
 		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at("PLA-1", "bolw8 a round plate of porcelain",
 				measurement, line, coin);
 
-		Product plate = Plate.at(notProvidedProvider, 1, 5, 6);
+		Product plate = Product.at(notProvidedProvider, 1, 5, 6);
 
 		assertThrows(RuntimeException.class, () -> Buy.at("", plate), Buy.INVALID_DESCRIPTION);
 	}
