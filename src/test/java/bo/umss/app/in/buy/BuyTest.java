@@ -15,7 +15,7 @@ public class BuyTest {
 	@Test
 	public void codeProductCanNotBeNull() {
 		assertThrows(RuntimeException.class, () -> Buy.at("bowl7 a round plate of porcelain", null),
-				Buy.INVALID_PRODUCT);
+				Buy.PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
@@ -28,6 +28,6 @@ public class BuyTest {
 
 		Product plate = Product.at(notProvidedProvider, 1, 5, 6);
 
-		assertThrows(RuntimeException.class, () -> Buy.at("", plate), Buy.INVALID_DESCRIPTION);
+		assertThrows(RuntimeException.class, () -> Buy.at("", plate), Buy.DESCRIPTION_CAN_NOT_BE_BLANK);
 	}
 }

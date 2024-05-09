@@ -54,7 +54,7 @@ public class IventoryTest {
 
 		Buy secondBuy = Buy.at("purchase porcelain plates", plate);
 
-		assertThrows(RuntimeException.class, () -> plate.addBuy(secondBuy), Product.ALREADY_CODE_PRODUCT);
+		assertThrows(RuntimeException.class, () -> plate.addBuy(secondBuy), Product.CODE_PRODUCT_DUPLICATE);
 	}
 
 	@Test
@@ -87,7 +87,7 @@ public class IventoryTest {
 
 		Inventory inventory = new Inventory();
 		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
-				Inventory.NOT_REGISTER_CODE_PRODUCT);
+				Inventory.CODE_PRODUCT_DOES_NOT_ADD);
 	}
 
 	@Test
@@ -143,7 +143,7 @@ public class IventoryTest {
 		inventory.addBuyTransaction(plate);
 
 		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
-				Inventory.INVALID_CODE_PRODUCT_REFERRAL);
+				Inventory.CODE_PRODUCT_DOES_NOT_EXIST);
 	}
 
 	@Test

@@ -1,6 +1,6 @@
 package bo.umss.app.in.product;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -26,19 +26,19 @@ public class ProductTest {
 
 	@Test
 	public void noLetInvalidAmount() {
-		assertThrows(RuntimeException.class, () -> Product.at(notProvidedProvider, -5, 5, 6), Product.INVALID_AMOUNT);
+		assertThrows(RuntimeException.class, () -> Product.at(notProvidedProvider, -5, 5, 6), Product.AMOUNT_CAN_NOT_BE_LESS_THAN);
 	}
 
 	@Test
 	public void noLetInvalidPriceCost() {
 		assertThrows(RuntimeException.class, () -> Product.at(notProvidedProvider, 1, 0, 6),
-				Product.INVALID_PRICE_COST);
+				Product.PRICE_COST_CAN_NOT_BE_LESS_THAN);
 	}
 
 	@Test
 	public void noLetInvalidPriceSale() {
 		assertThrows(RuntimeException.class, () -> Product.at(notProvidedProvider, 1, 5, 0),
-				Product.INVALID_PRICE_SALE);
+				Product.PRICE_SALE_CAN_NOT_BE_LESS_THAN);
 	}
 
 	@Test

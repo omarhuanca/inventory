@@ -21,7 +21,7 @@ public class ChangePriceTest {
 		final Integer currentPrice = 0;
 		final Integer oldPrice = 4;
 		assertThrows(RuntimeException.class, () -> ChangePrice.at(currentPrice, oldPrice, currentDate),
-				ChangePrice.INVALID_CURRENT_PRICE);
+				ChangePrice.CURRENT_PRICE_CAN_NOT_BE_LESS_THAN);
 	}
 
 	@Test
@@ -29,6 +29,6 @@ public class ChangePriceTest {
 		final Integer currentPrice = 5;
 		final Integer oldPrice = 0;
 		assertThrows(RuntimeException.class, () -> ChangePrice.at(currentPrice, oldPrice, currentDate),
-				ChangePrice.INVALID_OLD_PRICE);
+				ChangePrice.OLD_PRICE_CAN_NOT_BE_LESS_THAN);
 	}
 }

@@ -14,9 +14,9 @@ import bo.umss.app.in.referral.Referral;
 public class Inventory {
 
 	public static final String QUANTITY_GREATHER_THAN_AVAILABLE = "Quantity greather than avaible.";
-	public static final String NOT_REGISTER_CODE_PRODUCT = "Code product was not added to any transaction.";
-	public static final String INVALID_ADD_PRODUCT_TWO_TIMES = "Product can not be add two times.";
-	public static final String INVALID_CODE_PRODUCT_REFERRAL = "Code Product does not exists.";
+	public static final String CODE_PRODUCT_DOES_NOT_ADD = "Code product was not added to any transaction.";
+	public static final String PRODUCT_CAN_NOT_BE_TWO_TIMES = "Product can not be add two times.";
+	public static final String CODE_PRODUCT_DOES_NOT_EXIST = "Code Product does not exists.";
 	public static final String ITEM_CAN_NOT_EXIST = "Item does not exist";
 
 	private List<Product> listProduct;
@@ -32,7 +32,7 @@ public class Inventory {
 					.collect(Collectors.toList());
 						
 			if (0 < filterProduct.size()) {
-				throw new RuntimeException(Inventory.INVALID_ADD_PRODUCT_TWO_TIMES);
+				throw new RuntimeException(Inventory.PRODUCT_CAN_NOT_BE_TWO_TIMES);
 			}
 			listProduct.add(product);
 		} else {
@@ -51,7 +51,7 @@ public class Inventory {
 		if (0 < listProductOptional.size()) {
 			Optional<Product> productOptional = listProductOptional.stream().findAny();
 			if (!productOptional.isPresent()) {
-				throw new RuntimeException(Inventory.INVALID_CODE_PRODUCT_REFERRAL);
+				throw new RuntimeException(Inventory.CODE_PRODUCT_DOES_NOT_EXIST);
 			}
 			Product product = productOptional.get();
 			if (!product.canIncreaseAmount(referral.getAmount())) {
@@ -61,7 +61,7 @@ public class Inventory {
 			product.getListTransaction().add(referral);
 
 		} else {
-			throw new RuntimeException(Inventory.NOT_REGISTER_CODE_PRODUCT);
+			throw new RuntimeException(Inventory.CODE_PRODUCT_DOES_NOT_ADD);
 		}
 
 	}
@@ -79,7 +79,7 @@ public class Inventory {
 								&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(codeProduct))
 						.collect(Collectors.toList());
 				if (0 == filterBuy.size())
-					throw new RuntimeException(Inventory.NOT_REGISTER_CODE_PRODUCT);
+					throw new RuntimeException(Inventory.CODE_PRODUCT_DOES_NOT_ADD);
 			}
 		}
 	}

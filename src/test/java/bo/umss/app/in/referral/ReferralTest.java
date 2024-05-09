@@ -14,7 +14,7 @@ public class ReferralTest {
 
 	@Test
 	public void verifyCodeProductCanNotBeNull() {
-		assertThrows(RuntimeException.class, () -> Referral.at(null, 1), Referral.INVALID_CODE_PRODUCT);
+		assertThrows(RuntimeException.class, () -> Referral.at(null, 1), Referral.CODE_PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
@@ -25,7 +25,7 @@ public class ReferralTest {
 		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at("PLA-1", "bowl8 a round plate of porcelain",
 				measurement, line, coin);
 
-		assertThrows(RuntimeException.class, () -> Referral.at(notProvidedProvider, -1), Referral.INVALID_AMOUNT);
+		assertThrows(RuntimeException.class, () -> Referral.at(notProvidedProvider, -1), Referral.INVALID_AMOUNT_CAN_NOT_BE_GREATHER_);
 	}
 
 }

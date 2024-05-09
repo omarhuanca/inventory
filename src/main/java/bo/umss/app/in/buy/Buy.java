@@ -8,8 +8,8 @@ import bo.umss.app.in.product.Product;
 
 public class Buy implements Transaction {
 
-	public static final String INVALID_DESCRIPTION = "Description can not be empty";
-	public static final String INVALID_PRODUCT = "Product can not be null";
+	public static final String DESCRIPTION_CAN_NOT_BE_BLANK = "Description can not be empty";
+	public static final String PRODUCT_CAN_NOT_BE_NULL = "Product can not be null";
 
 	private String description;
 	private Product product;
@@ -21,9 +21,9 @@ public class Buy implements Transaction {
 
 	public static Buy at(String description, Product product) {
 		if (description.isEmpty())
-			throw new RuntimeException(Buy.INVALID_DESCRIPTION);
+			throw new RuntimeException(Buy.DESCRIPTION_CAN_NOT_BE_BLANK);
 		if(null == product)
-			throw new RuntimeException(Buy.INVALID_PRODUCT);
+			throw new RuntimeException(Buy.PRODUCT_CAN_NOT_BE_NULL);
 
 		return new Buy(description, product);
 	}

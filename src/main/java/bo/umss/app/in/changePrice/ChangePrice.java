@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class ChangePrice {
 
-	public static final String INVALID_CURRENT_PRICE = "Current price can not be zero";
-	public static final String INVALID_OLD_PRICE = "Old price can not be zero";
-	public static final String INVALID_OLD_GRATHER_CURRENT_PRICE = "Old price can not be greather than current price";
+	public static final String CURRENT_PRICE_CAN_NOT_BE_LESS_THAN = "Current price can not be zero";
+	public static final String OLD_PRICE_CAN_NOT_BE_LESS_THAN = "Old price can not be zero";
+	public static final String OLD_PRICE_CAN_NOT_BE_GRATHER_CURRENT_PRICE = "Old price can not be greather than current price";
 
 	private Integer currentPrice;
 	private Integer oldPrice;
@@ -20,11 +20,11 @@ public class ChangePrice {
 
 	public static ChangePrice at(Integer currentPrice, Integer oldPrice, LocalDate currentDate) {
 		if (0 == currentPrice)
-			throw new RuntimeException(INVALID_CURRENT_PRICE);
+			throw new RuntimeException(CURRENT_PRICE_CAN_NOT_BE_LESS_THAN);
 		if (0 == oldPrice)
-			throw new RuntimeException(INVALID_OLD_PRICE);
+			throw new RuntimeException(OLD_PRICE_CAN_NOT_BE_LESS_THAN);
 		if (currentPrice < oldPrice)
-			throw new RuntimeException(INVALID_OLD_GRATHER_CURRENT_PRICE);
+			throw new RuntimeException(OLD_PRICE_CAN_NOT_BE_GRATHER_CURRENT_PRICE);
 
 		return new ChangePrice(currentPrice, oldPrice, currentDate);
 	}

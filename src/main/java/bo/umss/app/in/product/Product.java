@@ -12,12 +12,12 @@ import bo.umss.app.in.codeProduct.CodeProduct;
 
 public class Product {
 
-	public static final String INVALID_CODE_PRODUCT = "Code product can not be null";
-	public static final String INVALID_DESCRIPTION = "Description can not be null";
-	public static final String INVALID_AMOUNT = "Amount can not be zero or negative";
-	public static final String INVALID_PRICE_COST = "Price cost can not be zero or negative";
-	public static final String INVALID_PRICE_SALE = "Price sale can not be zero or negative";
-	public static final String ALREADY_CODE_PRODUCT = "Code product already exists";
+	public static final String CODE_CAN_NOT_BE_NULL = "Code product can not be null";
+	public static final String DESCRIPTION_CAN_NOT_BE_NULL = "Description can not be null";
+	public static final String AMOUNT_CAN_NOT_BE_LESS_THAN = "Amount can not be zero or negative";
+	public static final String PRICE_COST_CAN_NOT_BE_LESS_THAN = "Price cost can not be zero or negative";
+	public static final String PRICE_SALE_CAN_NOT_BE_LESS_THAN = "Price sale can not be zero or negative";
+	public static final String CODE_PRODUCT_DUPLICATE = "Code product already exists";
 
 	private CodeProduct codeProduct;
 	private Integer amount;
@@ -38,13 +38,13 @@ public class Product {
 	public static Product at(CodeProduct codeProduct, Integer amount, Integer priceCost,
 			Integer priceSale) {
 		if (null == codeProduct)
-			throw new RuntimeException(INVALID_CODE_PRODUCT);
+			throw new RuntimeException(CODE_CAN_NOT_BE_NULL);
 		if (0 >= amount)
-			throw new RuntimeException(INVALID_AMOUNT);
+			throw new RuntimeException(AMOUNT_CAN_NOT_BE_LESS_THAN);
 		if (0 >= priceCost)
-			throw new RuntimeException(INVALID_PRICE_COST);
+			throw new RuntimeException(PRICE_COST_CAN_NOT_BE_LESS_THAN);
 		if (0 >= priceSale)
-			throw new RuntimeException(INVALID_PRICE_SALE);
+			throw new RuntimeException(PRICE_SALE_CAN_NOT_BE_LESS_THAN);
 
 		return new Product(codeProduct, amount, priceCost, priceSale);
 	}
@@ -99,7 +99,7 @@ public class Product {
 					&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(buy.getProduct().getCodeProduct()))
 					.findAny();
 			if (buyOptional.isPresent())
-				throw new RuntimeException(Product.ALREADY_CODE_PRODUCT);
+				throw new RuntimeException(Product.CODE_PRODUCT_DUPLICATE);
 
 			listTransaction.add(buy);
 		}

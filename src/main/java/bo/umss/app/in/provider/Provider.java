@@ -2,8 +2,8 @@ package bo.umss.app.in.provider;
 
 public class Provider {
 
-	public static final String INVALID_NAME = "Name can not be blank.";
-	public static final String INVALID_PHONE_NUMBER = "Phone number can not be blank.";
+	public static final String NAME_CAN_NOT_BE_BLANK = "Name can not be blank.";
+	public static final String PHONE_NUMBER_CAN_NOT_BE_BLANK = "Phone number can not be blank.";
 
 	private String name;
 	private String phoneNumber;
@@ -15,9 +15,9 @@ public class Provider {
 
 	public static Provider at(String name, String phoneNumber) {
 		if (name.isEmpty())
-			throw new RuntimeException(INVALID_NAME);
+			throw new RuntimeException(NAME_CAN_NOT_BE_BLANK);
 		if (phoneNumber.isEmpty())
-			throw new RuntimeException(INVALID_PHONE_NUMBER);
+			throw new RuntimeException(PHONE_NUMBER_CAN_NOT_BE_BLANK);
 		return new Provider(name, phoneNumber);
 	}
 

@@ -2,8 +2,8 @@ package bo.umss.app.in.coin;
 
 public class Coin {
 
-	public static final String INVALID_CODE = "Code can not be blank";
-	public static final String INVALID_INITIAL = "Initial can not be blank";
+	public static final String CODE_CAN_NOT_BE_EMPTY = "Code can not be blank";
+	public static final String INITIAL_CAN_NOT_BE_BLANK = "Initial can not be blank";
 	public static final String CODE_USA = "coin1";
 	public static final String NAME_USA = "USD";
 
@@ -17,9 +17,9 @@ public class Coin {
 
 	public static Coin at(String code, String initial) {
 		if (code.isEmpty())
-			throw new RuntimeException(INVALID_CODE);
+			throw new RuntimeException(CODE_CAN_NOT_BE_EMPTY);
 		if (initial.isEmpty())
-			throw new RuntimeException(INVALID_INITIAL);
+			throw new RuntimeException(INITIAL_CAN_NOT_BE_BLANK);
 
 		return new Coin(code, initial);
 	}
