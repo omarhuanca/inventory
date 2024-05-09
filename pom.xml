@@ -31,7 +31,7 @@
   </dependencies>
 
   <build>
-      <finalName>iventory</finalName>
+      <finalName>inventory</finalName>
 	  <plugins>
 	      <!-- This is added so we can force which SDK to use -->
 			<plugin>

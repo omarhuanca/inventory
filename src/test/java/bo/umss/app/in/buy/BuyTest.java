@@ -4,19 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.Product;
-import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
-import bo.umss.app.in.plate.Plate;
+import bo.umss.app.in.product.Product;
 
 public class BuyTest {
 
 	@Test
 	public void codeProductCanNotBeNull() {
 		assertThrows(RuntimeException.class, () -> Buy.at("bowl7 a round plate of porcelain", null),
-				Buy.INVALID_PRODUCT);
+				Buy.PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
@@ -24,10 +23,11 @@ public class BuyTest {
 		Measurement measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
 		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
 		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		CodeProduct codeProduct = CodeProduct.at("PLA-1", "bolw8 a round plate of porcelain", measurement, line, coin);
+		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at("PLA-1", "bolw8 a round plate of porcelain",
+				measurement, line, coin);
 
-		Product plate = Plate.at(codeProduct, 1, 5, 6);
+		Product plate = Product.at(notProvidedProvider, 1, 5, 6);
 
-		assertThrows(RuntimeException.class, () -> Buy.at("", plate), Buy.INVALID_DESCRIPTION);
+		assertThrows(RuntimeException.class, () -> Buy.at("", plate), Buy.DESCRIPTION_CAN_NOT_BE_BLANK);
 	}
 }

@@ -1,19 +1,32 @@
-package bo.umss.app.in.plate;
+package bo.umss.app.in.product;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import bo.umss.app.in.Product;
 import bo.umss.app.in.Transaction;
 import bo.umss.app.in.buy.Buy;
 import bo.umss.app.in.changePrice.ChangePrice;
 import bo.umss.app.in.codeProduct.CodeProduct;
 
-public class Plate extends Product {
+public class Product {
 
-	public Plate(CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
+	public static final String CODE_CAN_NOT_BE_NULL = "Code product can not be null";
+	public static final String DESCRIPTION_CAN_NOT_BE_NULL = "Description can not be null";
+	public static final String AMOUNT_CAN_NOT_BE_LESS_THAN = "Amount can not be zero or negative";
+	public static final String PRICE_COST_CAN_NOT_BE_LESS_THAN = "Price cost can not be zero or negative";
+	public static final String PRICE_SALE_CAN_NOT_BE_LESS_THAN = "Price sale can not be zero or negative";
+	public static final String CODE_PRODUCT_DUPLICATE = "Code product already exists";
+
+	private CodeProduct codeProduct;
+	private Integer amount;
+	private Integer priceCost;
+	private Integer priceSale;
+	private List<ChangePrice> listChangePriceCost;
+	private List<Transaction> listTransaction;
+
+	public Product(CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
 		this.codeProduct = codeProduct;
 		this.amount = amount;
 		this.priceCost = priceCost;
@@ -25,101 +38,86 @@ public class Plate extends Product {
 	public static Product at(CodeProduct codeProduct, Integer amount, Integer priceCost,
 			Integer priceSale) {
 		if (null == codeProduct)
-			throw new RuntimeException(INVALID_CODE_PRODUCT);
+			throw new RuntimeException(CODE_CAN_NOT_BE_NULL);
 		if (0 >= amount)
-			throw new RuntimeException(INVALID_AMOUNT);
+			throw new RuntimeException(AMOUNT_CAN_NOT_BE_LESS_THAN);
 		if (0 >= priceCost)
-			throw new RuntimeException(INVALID_PRICE_COST);
+			throw new RuntimeException(PRICE_COST_CAN_NOT_BE_LESS_THAN);
 		if (0 >= priceSale)
-			throw new RuntimeException(INVALID_PRICE_SALE);
+			throw new RuntimeException(PRICE_SALE_CAN_NOT_BE_LESS_THAN);
 
-		return new Plate(codeProduct, amount, priceCost, priceSale);
+		return new Product(codeProduct, amount, priceCost, priceSale);
 	}
-
-	@Override
+	
 	public CodeProduct getCodeProduct() {
 		return codeProduct;
 	}
 
-	@Override
 	public Integer getAmount() {
 		return amount;
 	}
 
-	@Override
 	public Integer getPriceCost() {
 		return priceCost;
 	}
 
-	@Override
 	public void setPriceCost(Integer priceCost) {
 		this.priceCost = priceCost;
 	}
 
-	@Override
 	public Integer getPriceSale() {
 		return priceSale;
 	}
 
-	@Override
 	public List<ChangePrice> getListChangePriceCost() {
 		return listChangePriceCost;
 	}
 
-	@Override
 	public List<Transaction> getListTransaction() {
 		return listTransaction;
 	}
 
-	@Override
 	public Boolean canAddAnyTransaction() {
 		return codeProduct.existCode();
 	}
 
-	@Override
 	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
-		return listTransaction.size() >= count;
+		return listTransaction.size() > count;
 	}
 
-	@Override
 	public Boolean alreadyCodeProduct() {
 		return null != codeProduct;
 	}
 
-	@Override
 	public Boolean amountGreatherThanZero() {
 		return amount > 0;
 	}
 
-	@Override
 	public void addBuy(Buy buy) {
 		if (amountGreatherThanZero()) {
-			Optional<Transaction> buyOptional = listTransaction.stream()
-					.filter(item -> item instanceof Buy && ((Buy) item).getProduct().getCodeProduct().getCode()
-							.equals(buy.getProduct().getCodeProduct().getCode()))
+			Optional<Transaction> buyOptional = listTransaction.stream().filter(item -> item instanceof Buy
+					&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(buy.getProduct().getCodeProduct()))
 					.findAny();
 			if (buyOptional.isPresent())
-				throw new RuntimeException(Product.ALREADY_CODE_PRODUCT);
+				throw new RuntimeException(Product.CODE_PRODUCT_DUPLICATE);
 
 			listTransaction.add(buy);
 		}
 	}
 
-	@Override
 	public Boolean wasAddAnyBuy(CodeProduct codeProduct) {
 		List<Transaction> filterBuy = listTransaction.stream()
 				.filter(item -> item instanceof Buy
-						&& ((Buy) item).getProduct().getCodeProduct().getCode().equals(codeProduct.getCode()))
+						&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(codeProduct))
 				.collect(Collectors.toList());
+
 		return filterBuy.size() > 0;
 	}
 
-	@Override
 	public Boolean canIncreaseAmount(Integer potencialAmount) {
 		return amount >= potencialAmount;
 	}
 
-	@Override
 	public void todoIncreaseAmount(Integer potencialAmount) {
 		if (this.canIncreaseAmount(potencialAmount)) {
 			amount = amount - potencialAmount;
