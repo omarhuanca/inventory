@@ -5,8 +5,8 @@ import bo.umss.app.in.codeProduct.CodeProduct;
 
 public class Referral implements Transaction {
 
-	public static final String INVALID_CODE_PRODUCT = "Code product cant not be null";
-	public static final String INVALID_AMOUNT = "Amount can not be greather than zero or equal to zero";
+	public static final String CODE_PRODUCT_CAN_NOT_BE_NULL = "Code product cant not be null";
+	public static final String INVALID_AMOUNT_CAN_NOT_BE_GREATHER_ = "Amount can not be greather than zero or equal to zero";
 
 	public CodeProduct codeProduct;
 	public Integer amount;
@@ -18,9 +18,9 @@ public class Referral implements Transaction {
 
 	public static Referral at(CodeProduct codeProduct, Integer amount) {
 		if (null == codeProduct)
-			throw new RuntimeException(Referral.INVALID_CODE_PRODUCT);
+			throw new RuntimeException(Referral.CODE_PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
-			throw new RuntimeException(Referral.INVALID_AMOUNT);
+			throw new RuntimeException(Referral.INVALID_AMOUNT_CAN_NOT_BE_GREATHER_);
 
 		return new Referral(codeProduct, amount);
 	}

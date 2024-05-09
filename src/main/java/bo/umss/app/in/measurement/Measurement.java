@@ -2,8 +2,8 @@ package bo.umss.app.in.measurement;
 
 public class Measurement {
 
-	public static final String INVALID_CODE = "Code can not be blank";
-	public static final String INVALID_NAME = "Name can not be blank";
+	public static final String CODE_CAN_NOT_BE_BLANK = "Code can not be blank";
+	public static final String NAME_CAN_NOT_BE_BLANK = "Name can not be blank";
 	public static final String CODE_PZA = "pza";
 	public static final String NAME_PZA = "piece";
 
@@ -17,9 +17,9 @@ public class Measurement {
 
 	public static Measurement at(String code, String name) {
 		if (code.isEmpty())
-			throw new RuntimeException(INVALID_CODE);
+			throw new RuntimeException(CODE_CAN_NOT_BE_BLANK);
 		if (name.isEmpty())
-			throw new RuntimeException(INVALID_NAME);
+			throw new RuntimeException(NAME_CAN_NOT_BE_BLANK);
 
 		return new Measurement(code, name);
 	}

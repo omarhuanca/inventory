@@ -7,7 +7,7 @@ import bo.umss.app.in.provider.Provider;
 
 public class ProvidedProvider extends CodeProduct {
 
-	public static final String INVALID_PROVIDER = "Provider can not be null.";
+	public static final String PROVIDER_CAN_NOT_BE_NULL = "Provider can not be null.";
 	private Provider provider;
 
 	public ProvidedProvider(String code, String description, Measurement measurement, Line line, Coin coin,
@@ -33,7 +33,7 @@ public class ProvidedProvider extends CodeProduct {
 		if (null == coin)
 			throw new RuntimeException(INVALID_COIN);
 		if (null == provider)
-			throw new RuntimeException(INVALID_PROVIDER);
+			throw new RuntimeException(PROVIDER_CAN_NOT_BE_NULL);
 
 		return new ProvidedProvider(code, description, measurement, line, coin, provider);
 
