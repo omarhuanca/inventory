@@ -1,9 +1,9 @@
 package bo.umss.app.in.inventory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,151 +14,60 @@ import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
+import bo.umss.app.in.price.Price;
 import bo.umss.app.in.product.Product;
-import bo.umss.app.in.referral.Referral;
+import bo.umss.app.in.stock.Stock;
 
 public class IventoryTest {
 
-	public CodeProduct codeProduct;
 	public Product plate;
-	public Measurement measurement;
 	public Coin coin;
-	public Line line;
+	public Measurement measurement;
+	public LocalDate date;
 
 	@BeforeEach
 	public void setUp() {
-		measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
-		line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
+		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
 		coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		codeProduct = NotProvidedProvider.at("plate-1", "description", measurement, line, coin);
-		plate = Product.at(codeProduct, 10, 5, 10);
-	}
-
-	@Test
-	public void codeProductAlreadyExistPrevious() {
-		assertFalse(plate.canAddAnyTransaction());
-	}
-
-	@Test
-	public void verifyAddBuySuccess() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		plate.addBuy(buy);
-
-		assertTrue(plate.wasAddAnyBuy(codeProduct));
-	}
-
-	@Test
-	public void addTwoSameTimeProduct() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		plate.addBuy(buy);
-
-		Buy secondBuy = Buy.at("purchase porcelain plates", plate);
-
-		assertThrows(RuntimeException.class, () -> plate.addBuy(secondBuy), Product.CODE_PRODUCT_DUPLICATE);
-	}
-
-	@Test
-	public void changePriceCostAfterIncreaseValue() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		buy.changePriceBuy(8);
-
-		assertTrue(buy.getProduct().getListChangePriceCost().size() == 1);
-	}
-
-	@Test
-	public void changePriceCostAfterIncreaseValueTwoTimes() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		buy.changePriceBuy(8);
-		buy.changePriceBuy(4);
-
-		assertTrue(buy.getProduct().getListChangePriceCost().size() == 1);
+		Price priceCost = Price.at(5, coin);
+		Price priceSale = Price.at(10, coin);
+		
+		CodeProduct notProvidedProvider = NotProvidedProvider.at("plate-1", "description", line);
+		measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
+		Stock stock = Stock.at(10, measurement);
+		plate = Product.at(notProvidedProvider, stock, priceCost, priceSale);
+	
+		date = LocalDate.of(2024, 04, 20);
+		
 	}
 
 	@Test
 	public void tryAddProductWithoutTransaction() {
 		Inventory inventory = new Inventory();
 
-		assertThrows(RuntimeException.class, () -> inventory.addBuyTransaction(plate), Inventory.ITEM_CAN_NOT_EXIST);
+		assertThrows(RuntimeException.class, () -> inventory.addProduct(plate), Inventory.ITEM_CAN_NOT_EXIST);
 	}
 
 	@Test
-	public void canNotLetWithdrawWithoutBuy() {
-		Referral referral = Referral.at(plate.getCodeProduct(), 15);
-
-		Inventory inventory = new Inventory();
-		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
-				Inventory.CODE_PRODUCT_DOES_NOT_ADD);
-	}
-
-	@Test
-	public void toDoReferralAmountProduct() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		plate.addBuy(buy);
-
-		// The amount referal should be greather than amount product Referral
-		Referral referral = Referral.at(plate.getCodeProduct(), 15);
-
-		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
-
-		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
-				Inventory.QUANTITY_GREATHER_THAN_AVAILABLE);
-	}
-
-	@Test
-	public void addTwoDiferentProductInventory() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
+	public void addTwoDifferentProduct() {
+		Buy buy = Buy.at(plate.getCodeProduct(), 5, date, "purchase porcelain plates");
 		plate.addBuy(buy);
 
 		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
-				line2, coin);
+		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", line2);
 
-		Product cup = Product.at(notProvidedProvider2, 10, 8, 16);
+		Price priceCost = Price.at(8, coin);
+		Price priceSale = Price.at(16, coin);
+		Stock stock = Stock.at(10, measurement);
+		Product cup = Product.at(notProvidedProvider2, stock, priceCost, priceSale);
 
-		Buy buy2 = Buy.at("purchase porcelain cupes", cup);
+		Buy buy2 = Buy.at(notProvidedProvider2, 4, date, "purchase porcelain cupes");
 		cup.addBuy(buy2);
 
 		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
-		inventory.addBuyTransaction(cup);
+		inventory.addProduct(plate);
+		inventory.addProduct(cup);
 
 		assertTrue(inventory.compareListProductGreatherZero(2));
-	}
-
-	@Test
-	public void tryAddReferralWithAddBuy() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		plate.addBuy(buy);
-
-		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
-		NotProvidedProvider notProvidedProvider2 = NotProvidedProvider.at("cup-1", "description cup", measurement,
-				line2, coin);
-
-		Product cup = Product.at(notProvidedProvider2, 10, 8, 16);
-
-		Referral referral = Referral.at(cup.getCodeProduct(), 5);
-
-		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
-
-		assertThrows(RuntimeException.class, () -> inventory.withdrawReferralTransaction(referral),
-				Inventory.CODE_PRODUCT_DOES_NOT_EXIST);
-	}
-
-	@Test
-	public void verifyAmountTransactionWasAdded() {
-		Buy buy = Buy.at("purchase porcelain plates", plate);
-		plate.addBuy(buy);
-
-		Referral referral = Referral.at(plate.getCodeProduct(), 1);
-		Referral referralSecond = Referral.at(plate.getCodeProduct(), 1);
-
-		Inventory inventory = new Inventory();
-		inventory.addBuyTransaction(plate);
-		inventory.withdrawReferralTransaction(referral);
-		inventory.withdrawReferralTransaction(referralSecond);
-
-		assertEquals(inventory.compareEqualListTransaction(plate), 3);
 	}
 }

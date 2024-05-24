@@ -6,6 +6,9 @@ public class Measurement {
 	public static final String NAME_CAN_NOT_BE_BLANK = "Name can not be blank";
 	public static final String CODE_PZA = "pza";
 	public static final String NAME_PZA = "piece";
+	public static final String CODE_DOC = "doc";
+	public static final String NAME_DOC = "dozen";
+	
 
 	private String code;
 	private String name;

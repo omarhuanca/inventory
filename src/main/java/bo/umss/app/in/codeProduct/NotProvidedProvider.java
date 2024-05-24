@@ -1,8 +1,6 @@
 package bo.umss.app.in.codeProduct;
 
-import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
-import bo.umss.app.in.measurement.Measurement;
 import bo.umss.app.in.provider.Provider;
 
 public class NotProvidedProvider extends CodeProduct {
@@ -10,28 +8,21 @@ public class NotProvidedProvider extends CodeProduct {
 	public String DEFAULT_PROVIDER_NAME = "Pepe";
 	public String DEFAULT_PROVIDER_PHONE_NUMBER = "71476576";
 
-	public NotProvidedProvider(String code, String description, Measurement measurement, Line line, Coin coin) {
+	public NotProvidedProvider(String code, String description, Line line) {
 		this.code = code;
 		this.description = description;
-		this.measurement = measurement;
 		this.line = line;
-		this.coin = coin;
 	}
 
-	public static NotProvidedProvider at(String code, String description, Measurement measurement, Line line,
-			Coin coin) {
+	public static NotProvidedProvider at(String code, String description, Line line) {
 		if (code.isEmpty())
-			throw new RuntimeException(INVALID_CODE);
+			throw new RuntimeException(CODE_CAN_NOT_BE_BLANK);
 		if (description.isEmpty())
-			throw new RuntimeException(INVALID_DESCRIPTION);
-		if (null == measurement)
-			throw new RuntimeException(INVALID_MEASUREMENT);
+			throw new RuntimeException(DESCRIPTION_CAN_NOT_BE_BLANK);
 		if (null == line)
-			throw new RuntimeException(INVALID_LINE);
-		if (null == coin)
-			throw new RuntimeException(INVALID_COIN);
+			throw new RuntimeException(LINE_CAN_NOT_BE_NULL);
 
-		return new NotProvidedProvider(code, description, measurement, line, coin);
+		return new NotProvidedProvider(code, description, line);
 	}
 
 	@Override
@@ -45,28 +36,13 @@ public class NotProvidedProvider extends CodeProduct {
 	}
 
 	@Override
-	public Measurement getMeasurement() {
-		return measurement;
-	}
-
-	@Override
 	public Line getLine() {
 		return line;
 	}
 
 	@Override
-	public Coin getCoin() {
-		return coin;
-	}
-
-	@Override
-	public Boolean existCode() {
-		return code.isEmpty();
-	}
-
-	@Override
 	public Boolean compareAnotherCode(CodeProduct otherCodeProduct) {
-		return code.equals(otherCodeProduct.getCode());
+		return code.equalsIgnoreCase(otherCodeProduct.getCode());
 	}
 
 	@Override

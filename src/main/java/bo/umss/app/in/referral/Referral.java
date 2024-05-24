@@ -1,36 +1,41 @@
 package bo.umss.app.in.referral;
 
+import java.time.LocalDate;
+
 import bo.umss.app.in.Transaction;
 import bo.umss.app.in.codeProduct.CodeProduct;
 
-public class Referral implements Transaction {
+public class Referral extends Transaction {
 
-	public static final String CODE_PRODUCT_CAN_NOT_BE_NULL = "Code product cant not be null";
-	public static final String INVALID_AMOUNT_CAN_NOT_BE_GREATHER_ = "Amount can not be greather than zero or equal to zero";
-
-	public CodeProduct codeProduct;
-	public Integer amount;
-
-	public Referral(CodeProduct codeProduct, Integer amount) {
+	public Referral(CodeProduct codeProduct, Integer amount, LocalDate localDate) {
 		this.codeProduct = codeProduct;
 		this.amount = amount;
+		this.localDate = localDate;
 	}
 
-	public static Referral at(CodeProduct codeProduct, Integer amount) {
+	public static Referral at(CodeProduct codeProduct, Integer amount, LocalDate localDate) {
 		if (null == codeProduct)
-			throw new RuntimeException(Referral.CODE_PRODUCT_CAN_NOT_BE_NULL);
+			throw new RuntimeException(Transaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
-			throw new RuntimeException(Referral.INVALID_AMOUNT_CAN_NOT_BE_GREATHER_);
+			throw new RuntimeException(Transaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
+		if(null == localDate)
+			throw new RuntimeException(Transaction.DATE_CAN_NOT_BE_NULL);
 
-		return new Referral(codeProduct, amount);
+		return new Referral(codeProduct, amount, localDate);
 	}
 
+	@Override
 	public CodeProduct getCodeProduct() {
 		return codeProduct;
 	}
 
+	@Override
 	public Integer getAmount() {
 		return amount;
 	}
 
+	@Override
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
 }

@@ -26,10 +26,6 @@ public class Line {
 		return new Line(code, name);
 	}
 
-	public static String getInvalidName() {
-		return NAME_CAN_NOT_BE_BLANK;
-	}
-
 	public String getCode() {
 		return code;
 	}
