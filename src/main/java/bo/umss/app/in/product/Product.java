@@ -1,71 +1,77 @@
 package bo.umss.app.in.product;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import bo.umss.app.in.Transaction;
 import bo.umss.app.in.buy.Buy;
 import bo.umss.app.in.changePrice.ChangePrice;
 import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.price.Price;
+import bo.umss.app.in.referral.Referral;
+import bo.umss.app.in.stock.Stock;
 
 public class Product {
 
 	public static final String CODE_CAN_NOT_BE_NULL = "Code product can not be null";
 	public static final String DESCRIPTION_CAN_NOT_BE_NULL = "Description can not be null";
-	public static final String AMOUNT_CAN_NOT_BE_LESS_THAN = "Amount can not be zero or negative";
-	public static final String PRICE_COST_CAN_NOT_BE_LESS_THAN = "Price cost can not be zero or negative";
-	public static final String PRICE_SALE_CAN_NOT_BE_LESS_THAN = "Price sale can not be zero or negative";
+	public static final String STOCK_CAN_NOT_BE_NULL = "Stock can not be null";
 	public static final String CODE_PRODUCT_DUPLICATE = "Code product already exists";
+	public static final String PRICE_COST_CAN_NOT_BE_NULL = "Price cost can not be null";
+	public static final String PRICE_SALE_CAN_NOT_BE_NULL = "Price sale can not be null";
 
 	private CodeProduct codeProduct;
-	private Integer amount;
-	private Integer priceCost;
-	private Integer priceSale;
+	private Stock stock;
+	private Price priceCost;
+	private Price priceSale;
 	private List<ChangePrice> listChangePriceCost;
 	private List<Transaction> listTransaction;
 
-	public Product(CodeProduct codeProduct, Integer amount, Integer priceCost, Integer priceSale) {
+	public Product(CodeProduct codeProduct, Stock stock, Price priceCost, Price priceSale) {
 		this.codeProduct = codeProduct;
-		this.amount = amount;
+		this.stock = stock;
 		this.priceCost = priceCost;
 		this.priceSale = priceSale;
 		this.listChangePriceCost = new ArrayList<>();
 		this.listTransaction = new ArrayList<>();
 	}
 
-	public static Product at(CodeProduct codeProduct, Integer amount, Integer priceCost,
-			Integer priceSale) {
+	public static Product at(CodeProduct codeProduct, Stock stock, Price priceCost, Price priceSale) {
 		if (null == codeProduct)
 			throw new RuntimeException(CODE_CAN_NOT_BE_NULL);
-		if (0 >= amount)
-			throw new RuntimeException(AMOUNT_CAN_NOT_BE_LESS_THAN);
-		if (0 >= priceCost)
-			throw new RuntimeException(PRICE_COST_CAN_NOT_BE_LESS_THAN);
-		if (0 >= priceSale)
-			throw new RuntimeException(PRICE_SALE_CAN_NOT_BE_LESS_THAN);
+		if (null == stock)
+			throw new RuntimeException(STOCK_CAN_NOT_BE_NULL);
+		if (null == priceCost)
+			throw new RuntimeException(PRICE_COST_CAN_NOT_BE_NULL);
+		if (null == priceSale)
+			throw new RuntimeException(PRICE_SALE_CAN_NOT_BE_NULL);
 
-		return new Product(codeProduct, amount, priceCost, priceSale);
+		return new Product(codeProduct, stock, priceCost, priceSale);
 	}
-	
+
 	public CodeProduct getCodeProduct() {
 		return codeProduct;
 	}
 
-	public Integer getAmount() {
-		return amount;
+	public Stock getStock() {
+		return stock;
 	}
 
-	public Integer getPriceCost() {
+	private void setStock(Stock potentialStock) {
+		stock = potentialStock;
+	}
+
+	public Price getPriceCost() {
 		return priceCost;
 	}
 
-	public void setPriceCost(Integer priceCost) {
-		this.priceCost = priceCost;
+	public void setPriceCost(Price potentialPriceCost) {
+		priceCost = potentialPriceCost;
 	}
 
-	public Integer getPriceSale() {
+	public Price getPriceSale() {
 		return priceSale;
 	}
 
@@ -77,10 +83,6 @@ public class Product {
 		return listTransaction;
 	}
 
-	public Boolean canAddAnyTransaction() {
-		return codeProduct.existCode();
-	}
-
 	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
 		return listTransaction.size() > count;
 	}
@@ -89,38 +91,51 @@ public class Product {
 		return null != codeProduct;
 	}
 
-	public Boolean amountGreatherThanZero() {
-		return amount > 0;
-	}
-
 	public void addBuy(Buy buy) {
-		if (amountGreatherThanZero()) {
+		if (stock.amountGreatherThanZero()) {
 			Optional<Transaction> buyOptional = listTransaction.stream().filter(item -> item instanceof Buy
-					&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(buy.getProduct().getCodeProduct()))
-					.findAny();
+					&& ((Buy) item).getCodeProduct().compareAnotherCode(buy.getCodeProduct())).findAny();
 			if (buyOptional.isPresent())
 				throw new RuntimeException(Product.CODE_PRODUCT_DUPLICATE);
 
+			if(stock.verifyPotentialValueGreatherZero(buy.getAmount())) {
+				stock.todoIncreaseStock(buy.getAmount());
+			}
 			listTransaction.add(buy);
 		}
 	}
 
-	public Boolean wasAddAnyBuy(CodeProduct codeProduct) {
-		List<Transaction> filterBuy = listTransaction.stream()
-				.filter(item -> item instanceof Buy
-						&& ((Buy) item).getProduct().getCodeProduct().compareAnotherCode(codeProduct))
-				.collect(Collectors.toList());
-
-		return filterBuy.size() > 0;
+	public Boolean lessThanValuePriceCost(Price potentialPriceCost) {
+		return priceCost.lessThanValue(potentialPriceCost);
 	}
 
-	public Boolean canIncreaseAmount(Integer potencialAmount) {
-		return amount >= potencialAmount;
-	}
-
-	public void todoIncreaseAmount(Integer potencialAmount) {
-		if (this.canIncreaseAmount(potencialAmount)) {
-			amount = amount - potencialAmount;
+	public void changePriceBuy(Price potentialPriceCost, Stock stock) {
+		if (lessThanValuePriceCost(potentialPriceCost)
+				&& priceCost.getCoin().compareCode(potentialPriceCost.getCoin())) {
+			LocalDate currentDate = LocalDate.now();
+			ChangePrice changePrice = ChangePrice.at(potentialPriceCost, getPriceCost(), stock, currentDate);
+			getListChangePriceCost().add(changePrice);
+			setPriceCost(potentialPriceCost);
 		}
+
+	}
+
+	public Boolean canDecreaseStock(Integer amount) {
+		return stock.verifyValueGreatherThanPotentialValue(amount);
+	}
+
+	public void todoDecrementStock(Integer amount) {
+		stock.todoDecrementStock(amount);
+	}
+
+	public void changeMesurementStock(Stock potentialStock) {
+		if(stock.compareValue(potentialStock.getValue())) {
+			setStock(potentialStock);
+		}
+	}
+
+	public void addReferral(Referral referral) {
+		todoDecrementStock(referral.getAmount());
+		listTransaction.add(referral);
 	}
 }

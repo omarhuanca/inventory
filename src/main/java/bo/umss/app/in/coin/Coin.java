@@ -6,6 +6,8 @@ public class Coin {
 	public static final String INITIAL_CAN_NOT_BE_BLANK = "Initial can not be blank";
 	public static final String CODE_USA = "coin1";
 	public static final String NAME_USA = "USD";
+	public static final String CODE_BS = "coin2";
+	public static final String NAME_BS = "BS";
 
 	private String code;
 	private String initial;
@@ -30,5 +32,9 @@ public class Coin {
 
 	public String getInitial() {
 		return initial;
+	}
+
+	public Boolean compareCode(Coin potentialCoin) {
+		return code.equals(potentialCoin.getCode());
 	}
 }
