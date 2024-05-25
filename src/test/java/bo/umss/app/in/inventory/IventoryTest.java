@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.buy.StockBuy;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
@@ -50,7 +50,7 @@ public class IventoryTest {
 
 	@Test
 	public void addTwoDifferentProduct() {
-		Buy buy = Buy.at(plate.getCodeProduct(), 5, date, "purchase porcelain plates");
+		StockBuy buy = StockBuy.at(plate.getCodeProduct(), 5, date, "purchase porcelain plates");
 		plate.addBuy(buy);
 
 		Line line2 = Line.at(Line.CODE_CUP, Line.NAME_CUP);
@@ -61,7 +61,7 @@ public class IventoryTest {
 		Stock stock = Stock.at(10, measurement);
 		Product cup = Product.at(notProvidedProvider2, stock, priceCost, priceSale);
 
-		Buy buy2 = Buy.at(notProvidedProvider2, 4, date, "purchase porcelain cupes");
+		StockBuy buy2 = StockBuy.at(notProvidedProvider2, 4, date, "purchase porcelain cupes");
 		cup.addBuy(buy2);
 
 		Inventory inventory = new Inventory();

@@ -9,12 +9,12 @@ import bo.umss.app.in.line.Line;
 public class LineTest {
 
 	@Test
-	public void test1() {
-		assertThrows(RuntimeException.class, ()->Line.at(Line.CODE_PLATE, ""), Line.NAME_CAN_NOT_BE_BLANK);
+	public void canNotBeEmptyCode() {
+		assertThrows(RuntimeException.class, () -> Line.at("", Line.NAME_PLATE), Line.CODE_CAN_NOT_BE_BLANK);
 	}
-	
+
 	@Test
-	public void test2() {
-		assertThrows(RuntimeException.class, ()->Line.at("", Line.NAME_PLATE), Line.CODE_CAN_NOT_BE_BLANK);
+	public void canNotBeEmptyName() {
+		assertThrows(RuntimeException.class, () -> Line.at(Line.CODE_PLATE, ""), Line.NAME_CAN_NOT_BE_BLANK);
 	}
 }

@@ -2,33 +2,33 @@ package bo.umss.app.in.buy;
 
 import java.time.LocalDate;
 
-import bo.umss.app.in.Transaction;
+import bo.umss.app.in.StockTransaction;
 import bo.umss.app.in.codeProduct.CodeProduct;
 
-public class Buy extends Transaction {
+public class StockBuy extends StockTransaction {
 
 	public static final String DESCRIPTION_CAN_NOT_BE_BLANK = "Description can not be empty";
 
 	private String description;
 
-	public Buy(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
+	public StockBuy(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
 		this.codeProduct = codeProduct;
 		this.amount = amount;
 		this.localDate = localDate;
 		this.description = description;
 	}
 
-	public static Buy at(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
+	public static StockBuy at(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
 		if (null == codeProduct)
-			throw new RuntimeException(Transaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
+			throw new RuntimeException(StockTransaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
-			throw new RuntimeException(Transaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
+			throw new RuntimeException(StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 		if (null == localDate)
-			throw new RuntimeException(Transaction.DATE_CAN_NOT_BE_NULL);
+			throw new RuntimeException(StockTransaction.DATE_CAN_NOT_BE_NULL);
 		if (description.isEmpty())
-			throw new RuntimeException(Buy.DESCRIPTION_CAN_NOT_BE_BLANK);
+			throw new RuntimeException(StockBuy.DESCRIPTION_CAN_NOT_BE_BLANK);
 
-		return new Buy(codeProduct, amount, localDate, description);
+		return new StockBuy(codeProduct, amount, localDate, description);
 	}
 
 	@Override

@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.Transaction;
+import bo.umss.app.in.StockTransaction;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.line.Line;
-import bo.umss.app.in.referral.Referral;
+import bo.umss.app.in.referral.StockReferral;
 
-public class ReferralTest {
+public class StockReferralTest {
 
 	public CodeProduct notProvidedProvider;
 	public LocalDate date;
@@ -27,19 +27,19 @@ public class ReferralTest {
 
 	@Test
 	public void canNotBeNullCodeProduct() {
-		assertThrows(RuntimeException.class, () -> Referral.at(null, 1, date),
-				Transaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
+		assertThrows(RuntimeException.class, () -> StockReferral.at(null, 1, date),
+				StockTransaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
 	public void canNotBeLessThanZeroAmount() {
-		assertThrows(RuntimeException.class, () -> Referral.at(notProvidedProvider, -1, date),
-				Transaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
+		assertThrows(RuntimeException.class, () -> StockReferral.at(notProvidedProvider, -1, date),
+				StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 	}
 
 	@Test
 	public void canNotBeNullDate() {
-		assertThrows(RuntimeException.class, () -> Referral.at(notProvidedProvider, 5, null),
-				Transaction.DATE_CAN_NOT_BE_NULL);
+		assertThrows(RuntimeException.class, () -> StockReferral.at(notProvidedProvider, 5, null),
+				StockTransaction.DATE_CAN_NOT_BE_NULL);
 	}
 }

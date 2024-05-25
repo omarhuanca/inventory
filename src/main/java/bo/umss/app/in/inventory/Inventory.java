@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import bo.umss.app.in.Transaction;
-import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.StockTransaction;
+import bo.umss.app.in.buy.StockBuy;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.product.Product;
 
@@ -50,9 +50,9 @@ public class Inventory {
 			Optional<Product> productOptional = listProductOptional.stream().findAny();
 			if (productOptional.isPresent()) {
 				Product product = productOptional.get();
-				List<Transaction> filterBuy = product.getListTransaction().stream()
-						.filter(item -> item instanceof Buy
-								&& ((Buy) item).getCodeProduct().compareAnotherCode(codeProduct))
+				List<StockTransaction> filterBuy = product.getListTransaction().stream()
+						.filter(item -> item instanceof StockBuy
+								&& ((StockBuy) item).getCodeProduct().compareAnotherCode(codeProduct))
 						.collect(Collectors.toList());
 				if (0 == filterBuy.size())
 					throw new RuntimeException(Inventory.CODE_PRODUCT_DOES_NOT_ADD);

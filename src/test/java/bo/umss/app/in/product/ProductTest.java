@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.buy.StockBuy;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
 import bo.umss.app.in.price.Price;
-import bo.umss.app.in.referral.Referral;
+import bo.umss.app.in.referral.StockReferral;
 import bo.umss.app.in.stock.Stock;
 
 public class ProductTest {
@@ -123,7 +123,7 @@ public class ProductTest {
 	public void verifySizeListAfterAddTransactionBuy() {
 		Product plate = Product.at(notProvidedProvider, stock, priceCost, priceSale);
 
-		Buy buy = Buy.at(notProvidedProvider, 5, date, "purchase porcelain plates");
+		StockBuy buy = StockBuy.at(notProvidedProvider, 5, date, "purchase porcelain plates");
 		plate.addBuy(buy);
 
 		assertTrue(plate.listTransactionCompareGreatherThanZero(0));
@@ -131,7 +131,7 @@ public class ProductTest {
 
 	@Test
 	public void verifyAddBuySuccess() {
-		Buy buy = Buy.at(notProvidedProvider, 5, date, "purchase porcelain plates");
+		StockBuy buy = StockBuy.at(notProvidedProvider, 5, date, "purchase porcelain plates");
 		plate.addBuy(buy);
 
 		assertTrue(plate.getStock().compareValue(15));
@@ -139,10 +139,10 @@ public class ProductTest {
 
 	@Test
 	public void addTwoSameTimeProduct() {
-		Buy buy = Buy.at(plate.getCodeProduct(), 3, date, "purchase porcelain plates");
+		StockBuy buy = StockBuy.at(plate.getCodeProduct(), 3, date, "purchase porcelain plates");
 		plate.addBuy(buy);
 
-		Buy secondBuy = Buy.at(plate.getCodeProduct(), 5, date, "purchase porcelain plates");
+		StockBuy secondBuy = StockBuy.at(plate.getCodeProduct(), 5, date, "purchase porcelain plates");
 
 		assertTrue(plate.getStock().compareValue(13));
 		assertThrows(RuntimeException.class, () -> plate.addBuy(secondBuy), Product.CODE_PRODUCT_DUPLICATE);
@@ -150,7 +150,7 @@ public class ProductTest {
 
 	@Test
 	public void verifyStockAfterAddReferral() {
-		Referral referral = Referral.at(plate.getCodeProduct(), 5, date);
+		StockReferral referral = StockReferral.at(plate.getCodeProduct(), 5, date);
 		plate.addReferral(referral);
 
 		assertTrue(plate.getStock().compareValue(5));
@@ -160,7 +160,7 @@ public class ProductTest {
 	@Test
 	public void toDoReferralAmountProduct() {
 		// The amount referral should be grether than stock value
-		Referral referral = Referral.at(plate.getCodeProduct(), 15, date);
+		StockReferral referral = StockReferral.at(plate.getCodeProduct(), 15, date);
 
 		assertThrows(RuntimeException.class, () -> plate.addReferral(referral), Stock.AMOUNT_GREATHER_THAN_AVAILABLE);
 		assertTrue(plate.getStock().compareValue(10));

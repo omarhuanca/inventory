@@ -7,12 +7,12 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import bo.umss.app.in.Transaction;
+import bo.umss.app.in.StockTransaction;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.line.Line;
 
-public class BuyTest {
+public class StockBuyTest {
 
 	public final String BOWL7_DESCRIPTION = "bolw7 a round plate of porcelain";
 	
@@ -31,26 +31,26 @@ public class BuyTest {
 
 	@Test
 	public void canNotByNullCodeProduct() {
-		assertThrows(RuntimeException.class, () -> Buy.at(null, 1, date, BOWL7_DESCRIPTION),
-				Buy.CODE_PRODUCT_CAN_NOT_BE_NULL);
+		assertThrows(RuntimeException.class, () -> StockBuy.at(null, 1, date, BOWL7_DESCRIPTION),
+				StockBuy.CODE_PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
 	public void cantNotLetAmountLessThanZero() {
 		
-		assertThrows(RuntimeException.class, () -> Buy.at(notProvidedProvider, -1, date, BOWL7_DESCRIPTION),
-				Transaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
+		assertThrows(RuntimeException.class, () -> StockBuy.at(notProvidedProvider, -1, date, BOWL7_DESCRIPTION),
+				StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 	}
 
 	@Test
 	public void canNotBeNullDate() {
-		assertThrows(RuntimeException.class, () -> Buy.at(notProvidedProvider, 5, null, BOWL7_DESCRIPTION),
-				Transaction.DATE_CAN_NOT_BE_NULL);
+		assertThrows(RuntimeException.class, () -> StockBuy.at(notProvidedProvider, 5, null, BOWL7_DESCRIPTION),
+				StockTransaction.DATE_CAN_NOT_BE_NULL);
 	}
 
 	@Test
 	public void canNotBeEmptyDescription() {
-		assertThrows(RuntimeException.class, () -> Buy.at(notProvidedProvider, 1, date, ""),
-				Buy.DESCRIPTION_CAN_NOT_BE_BLANK);
+		assertThrows(RuntimeException.class, () -> StockBuy.at(notProvidedProvider, 1, date, ""),
+				StockBuy.DESCRIPTION_CAN_NOT_BE_BLANK);
 	}
 }
