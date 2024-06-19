@@ -37,10 +37,10 @@ public class ProductTest {
 		line = Line.at(TestObjectBucket.PLATE_NAME);
 		notProvidedProvider = NotProvidedProvider.at(TestObjectBucket.BOWL8_CODE, TestObjectBucket.BOWL8_DESCRIPTION,
 				line);
-		coin = Coin.at(TestObjectBucket.CODE_USA, TestObjectBucket.NAME_USA);
+		coin = Coin.at(TestObjectBucket.CODE_USA);
 		priceCost = Price.at(5.0, coin);
 		priceSale = Price.at(10.0, coin);
-		measurement = Measurement.at(TestObjectBucket.CODE_PZA, TestObjectBucket.NAME_PZA);
+		measurement = Measurement.at(TestObjectBucket.CODE_PZA);
 		stock = Stock.at(10, measurement);
 
 		plate = Product.at(notProvidedProvider, stock, priceCost, priceSale);
@@ -114,7 +114,7 @@ public class ProductTest {
 	public void addDiffTypeCoinAfterChangeValuePriceCost() {
 		Product plate = Product.at(notProvidedProvider, stock, priceCost, priceSale);
 
-		Coin coin2 = Coin.at(TestObjectBucket.CODE_BS, TestObjectBucket.NAME_BS);
+		Coin coin2 = Coin.at(TestObjectBucket.CODE_BS);
 		Price priceCostOther1 = Price.at(8.0, coin2);
 		plate.changePriceBuy(priceCostOther1, plate.getStock());
 

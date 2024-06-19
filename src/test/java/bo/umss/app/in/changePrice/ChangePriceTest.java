@@ -22,8 +22,8 @@ public class ChangePriceTest {
 	@BeforeEach
 	public void setUp() {
 		currentDate = LocalDate.now();
-		coin = Coin.at(TestObjectBucket.CODE_USA, TestObjectBucket.NAME_USA);
-		Measurement measurement = Measurement.at(TestObjectBucket.CODE_PZA, TestObjectBucket.NAME_PZA);
+		coin = Coin.at(TestObjectBucket.CODE_USA);
+		Measurement measurement = Measurement.at(TestObjectBucket.CODE_PZA);
 		stock = Stock.at(2, measurement);
 
 	}
@@ -73,7 +73,7 @@ public class ChangePriceTest {
 
 	@Test
 	public void newPriceDoesNotHasDiffMeasurementToOldPrice() {
-		Coin coin2 = Coin.at(TestObjectBucket.CODE_BS, TestObjectBucket.NAME_BS);
+		Coin coin2 = Coin.at(TestObjectBucket.CODE_BS);
 		Price newPrice = Price.at(5.0, coin);
 		Price oldPrice = Price.at(10.0, coin2);
 

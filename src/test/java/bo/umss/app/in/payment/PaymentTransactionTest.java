@@ -28,7 +28,7 @@ public class PaymentTransactionTest {
 
 	@BeforeEach
 	public void setUp() {
-		Coin coin = Coin.at(TestObjectBucket.CODE_USA, TestObjectBucket.NAME_USA);
+		Coin coin = Coin.at(TestObjectBucket.CODE_USA);
 		total = Price.at(10.0, coin);
 		discount = Discount.at(0);
 		LocalDate date = testObjectBucket.createDate();
