@@ -17,7 +17,7 @@ public class PriceTest {
 
 	@BeforeEach
 	public void setUp() {
-		coin = Coin.at(TestObjectBucket.CODE_USA, TestObjectBucket.NAME_USA);
+		coin = Coin.at(TestObjectBucket.CODE_USA);
 	}
 
 	@Test

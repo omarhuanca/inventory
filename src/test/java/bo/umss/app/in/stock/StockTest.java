@@ -16,7 +16,7 @@ public class StockTest {
 
 	@BeforeEach
 	public void setUp() {
-		measurement = Measurement.at(TestObjectBucket.CODE_PZA, TestObjectBucket.NAME_PZA);
+		measurement = Measurement.at(TestObjectBucket.CODE_PZA);
 	}
 
 	@Test

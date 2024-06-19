@@ -26,13 +26,9 @@ public class TestObjectBucket {
 	public static final String BOWL8_CODE = "PLA-2";
 	public static final String BOWL8_DESCRIPTION = "bowl8 porcelain plate";
 	public static final String CODE_PZA = "pza";
-	public static final String NAME_PZA = "piece";
 	public static final String CODE_DOC = "doc";
-	public static final String NAME_DOC = "dozen";
-	public static final String CODE_USA = "coin1";
-	public static final String NAME_USA = "USD";
-	public static final String CODE_BS = "coin2";
-	public static final String NAME_BS = "BS";
+	public static final String CODE_USA = "USD";
+	public static final String CODE_BS = "BS";
 	public static final String POT_CODE = "POT-1";
 	public static final String POT_NAME = "Set of pot";
 	public static final String INVOICE_NUMBER = "654987";
@@ -41,10 +37,10 @@ public class TestObjectBucket {
 		Line line = Line.at(PLATE_NAME);
 		CodeProduct notProvidedProvider = NotProvidedProvider.at(PLATE_CODE, "PLATO ZETA BOWL 8 PORCELANA CUADRADO",
 				line);
-		Coin coin = Coin.at(CODE_BS, NAME_BS);
+		Coin coin = Coin.at(CODE_BS);
 		Price priceCost = Price.at(5.0, coin);
 		Price priceSale = Price.at(10.0, coin);
-		Measurement measurement = Measurement.at(CODE_PZA, NAME_PZA);
+		Measurement measurement = Measurement.at(CODE_PZA);
 		Stock stock = Stock.at(10, measurement);
 
 		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
@@ -54,10 +50,10 @@ public class TestObjectBucket {
 		Line line = Line.at(CUP_NAME);
 		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at(CUP_CODE, "TAZA ISAYLIN PORCELANA RECTO",
 				line);
-		Coin coin = Coin.at(CODE_BS, NAME_BS);
+		Coin coin = Coin.at(CODE_BS);
 		Price priceCost = Price.at(8.0, coin);
 		Price priceSale = Price.at(16.0, coin);
-		Measurement measurement = Measurement.at(CODE_PZA, NAME_PZA);
+		Measurement measurement = Measurement.at(CODE_PZA);
 		Stock stock = Stock.at(10, measurement);
 
 		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
@@ -70,10 +66,10 @@ public class TestObjectBucket {
 	public Product createPot() {
 		Line line = Line.at(POT_NAME);
 		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at(POT_CODE, "OLLA TRILLIUM INOX 3 PCS", line);
-		Coin coin = Coin.at(CODE_USA, NAME_USA);
+		Coin coin = Coin.at(CODE_USA);
 		Price priceCost = Price.at(205.0, coin);
 		Price priceSale = Price.at(246.0, coin);
-		Measurement measurement = Measurement.at(CODE_PZA, NAME_PZA);
+		Measurement measurement = Measurement.at(CODE_PZA);
 		Stock stock = Stock.at(80, measurement);
 
 		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
