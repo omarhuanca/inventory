@@ -9,14 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bo.umss.app.in.NoteTransaction;
+import bo.umss.app.in.TestObjectBucket;
+import bo.umss.app.in.product.Product;
 
 public class NoteReferralTest {
 
-	public LocalDate date;
+	private LocalDate date;
+	private final TestObjectBucket testObjectBucket = new TestObjectBucket();
 
 	@BeforeEach
 	public void setUp() {
-		date = LocalDate.of(2024, 05, 15);
+		date = testObjectBucket.createDate();
 	}
 
 	@Test
@@ -27,6 +30,25 @@ public class NoteReferralTest {
 	@Test
 	public void verifySizeEmptyAfterCreateNoteReferral() {
 		NoteReferral noteReferral = NoteReferral.at(date);
+
 		assertTrue(noteReferral.compareIsEqualSize(0));
+	}
+
+	@Test
+	public void verifySizeAmountGreaterThanStockValue() {
+		NoteReferral noteReferral = NoteReferral.at(date);
+		Product plate = testObjectBucket.createPlate();
+		noteReferral.addProduct(plate, 20);
+
+		assertTrue(noteReferral.compareIsEqualSize(0));
+	}
+
+	@Test
+	public void verifySizeAfterAddOneReferral() {
+		NoteReferral noteReferral = NoteReferral.at(date);
+		Product cup = testObjectBucket.createCup();
+		noteReferral.addProduct(cup, 5);
+
+		assertTrue(noteReferral.compareIsEqualSize(1));
 	}
 }

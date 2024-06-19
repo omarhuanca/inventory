@@ -8,43 +8,44 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bo.umss.app.in.StockTransaction;
+import bo.umss.app.in.TestObjectBucket;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.line.Line;
 
 public class StockBuyTest {
 
-	public final String BOWL7_DESCRIPTION = "bolw7 a round plate of porcelain";
-	
-	public CodeProduct notProvidedProvider;
-	public LocalDate date;
+	private CodeProduct notProvidedProvider;
+	private LocalDate date;
+	private final TestObjectBucket testObjectBucket = new TestObjectBucket();
 
 	@BeforeEach
 	public void setUp() {
-		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
+		Line line = Line.at(TestObjectBucket.PLATE_NAME);
 
-		notProvidedProvider = NotProvidedProvider.at("PLA-1", BOWL7_DESCRIPTION,
+		notProvidedProvider = NotProvidedProvider.at(TestObjectBucket.PLATE_CODE, TestObjectBucket.BOWL7_DESCRIPTION,
 				line);
-		date = LocalDate.of(2024, 05, 01);
-		
+		date = testObjectBucket.createDate();
+
 	}
 
 	@Test
 	public void canNotByNullCodeProduct() {
-		assertThrows(RuntimeException.class, () -> StockBuy.at(null, 1, date, BOWL7_DESCRIPTION),
+		assertThrows(RuntimeException.class, () -> StockBuy.at(null, 1, date, TestObjectBucket.BOWL7_DESCRIPTION),
 				StockBuy.CODE_PRODUCT_CAN_NOT_BE_NULL);
 	}
 
 	@Test
 	public void cantNotLetAmountLessThanZero() {
-		
-		assertThrows(RuntimeException.class, () -> StockBuy.at(notProvidedProvider, -1, date, BOWL7_DESCRIPTION),
+		assertThrows(RuntimeException.class,
+				() -> StockBuy.at(notProvidedProvider, -1, date, TestObjectBucket.BOWL7_DESCRIPTION),
 				StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 	}
 
 	@Test
 	public void canNotBeNullDate() {
-		assertThrows(RuntimeException.class, () -> StockBuy.at(notProvidedProvider, 5, null, BOWL7_DESCRIPTION),
+		assertThrows(RuntimeException.class,
+				() -> StockBuy.at(notProvidedProvider, 5, null, TestObjectBucket.BOWL7_DESCRIPTION),
 				StockTransaction.DATE_CAN_NOT_BE_NULL);
 	}
 

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bo.umss.app.in.TestObjectBucket;
 import bo.umss.app.in.measurement.Measurement;
 
 public class StockTest {
@@ -15,12 +16,11 @@ public class StockTest {
 
 	@BeforeEach
 	public void setUp() {
-		measurement = Measurement.at(Measurement.CODE_PZA, Measurement.NAME_PZA);
+		measurement = Measurement.at(TestObjectBucket.CODE_PZA, TestObjectBucket.NAME_PZA);
 	}
 
 	@Test
 	public void canNotBeLessThanZeroValue() {
-
 		assertThrows(RuntimeException.class, () -> Stock.at(0, measurement), Stock.VALUE_CAN_NOT_BE_LESS_THAN_ZERO);
 	}
 
@@ -32,19 +32,22 @@ public class StockTest {
 	@Test
 	public void verifyPotentialValueIsLessThan() {
 		Stock stock = Stock.at(5, measurement);
-		assertTrue(stock.verifyValueGreatherThanPotentialValue(2));
+
+		assertTrue(stock.verifyValueGreaterThanPotentialValue(2));
 	}
 
 	@Test
-	public void verifyPotentialValueIsGreatherThan() {
+	public void verifyPotentialValueIsGreaterThan() {
 		Stock stock = Stock.at(5, measurement);
-		assertFalse(stock.verifyValueGreatherThanPotentialValue(7));
+
+		assertFalse(stock.verifyValueGreaterThanPotentialValue(7));
 	}
 
 	@Test
 	public void verifyDecrementValue() {
 		Stock stock = Stock.at(10, measurement);
 		stock.todoDecrementStock(3);
+
 		assertTrue(stock.compareValue(7));
 	}
 }

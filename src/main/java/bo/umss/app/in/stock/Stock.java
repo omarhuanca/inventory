@@ -6,7 +6,7 @@ public class Stock {
 
 	public static final String VALUE_CAN_NOT_BE_LESS_THAN_ZERO = "Value can not be less zero";
 	public static final String MEASUREMENT_CAN_NOT_BE_NULL = "Measurement can not be null";
-	public static final String AMOUNT_GREATHER_THAN_AVAILABLE = "Amount greather than avaible";
+	public static final String AMOUNT_GREATER_THAN_AVAILABLE = "Amount greater than available";
 
 	private Integer value;
 	private Measurement measurement;
@@ -29,23 +29,27 @@ public class Stock {
 		return value;
 	}
 
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
 	public Measurement getMeasurement() {
 		return measurement;
 	}
 
-	public Boolean amountGreatherThanZero() {
+	public Boolean amountGreaterThanZero() {
 		return value > 0;
 	}
 
-	public Boolean verifyValueGreatherThanPotentialValue(Integer potencialValue) {
-		return value >= potencialValue;
+	public Boolean verifyValueGreaterThanPotentialValue(Integer potentialValue) {
+		return value >= potentialValue;
 	}
 
-	public void todoDecrementStock(Integer potencialStock) {
-		if (verifyValueGreatherThanPotentialValue(potencialStock)) {
-			value = value - potencialStock;
+	public void todoDecrementStock(Integer potentialStock) {
+		if (verifyValueGreaterThanPotentialValue(potentialStock)) {
+			setValue(value - potentialStock);
 		} else {
-			throw new RuntimeException(AMOUNT_GREATHER_THAN_AVAILABLE);
+			throw new RuntimeException(AMOUNT_GREATER_THAN_AVAILABLE);
 		}
 	}
 
@@ -53,7 +57,7 @@ public class Stock {
 		return value.equals(potentialValue);
 	}
 
-	public Boolean verifyPotentialValueGreatherZero(Integer potentialValue) {
+	public Boolean verifyPotentialValueGreaterZero(Integer potentialValue) {
 		return potentialValue > 0;
 	}
 

@@ -1,17 +1,20 @@
 package bo.umss.app.in.referral;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import bo.umss.app.in.NoteTransaction;
+import bo.umss.app.in.price.Price;
 import bo.umss.app.in.product.Product;
 
 public class NoteReferral extends NoteTransaction {
 
 	public NoteReferral(LocalDate date) {
 		this.date = date;
-		listProductOutput = new ArrayList<>();
+		setProductOutput = new HashSet<>();
 	}
 
 	public static NoteReferral at(LocalDate date) {
@@ -27,11 +30,46 @@ public class NoteReferral extends NoteTransaction {
 	}
 
 	@Override
-	public List<Product> getListProductOutPut() {
-		return listProductOutput;
+	public Set<Product> getSetProductOutPut() {
+		return setProductOutput;
 	}
 
+	@Override
 	public Boolean compareIsEqualSize(Integer potentialSize) {
-		return listProductOutput.size() == potentialSize;
+		return setProductOutput.size() == potentialSize;
 	}
+
+	@Override
+	public Boolean compareSizeGreaterZero(Integer potentialSize) {
+		return setProductOutput.size() > potentialSize;
+	}
+
+	@Override
+	public Boolean addProduct(Product potentialProduct, Integer potentialAmount) {
+		Boolean response = Boolean.FALSE;
+		if (potentialProduct.canDecreaseStock(potentialAmount)) {
+			potentialProduct.todoDecrementStock(potentialAmount);
+			setProductOutput.add(potentialProduct);
+		}
+
+		return response;
+	}
+
+	@Override
+	public Map<String, Price> calculateTotal() {
+		Map<String, Price> mapResponse = new HashMap<>();
+		for (Product productOutput : setProductOutput) {
+			Price subtotal = productOutput.generateSubtotal();
+			Double sumarizePrice = subtotal.getValue();
+			if (0 < mapResponse.size() && null != mapResponse.get(productOutput.getPriceSale().getCoin().getCode())) {
+				sumarizePrice = mapResponse.get(productOutput.getPriceSale().getCoin().getCode())
+						.addWithOtherPrice(subtotal);
+			}
+			mapResponse.put(productOutput.getPriceSale().getCoin().getCode(),
+					Price.at(sumarizePrice, subtotal.getCoin()));
+		}
+
+		return mapResponse;
+	}
+
 }

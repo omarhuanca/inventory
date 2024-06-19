@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bo.umss.app.in.StockTransaction;
+import bo.umss.app.in.TestObjectBucket;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.line.Line;
@@ -15,14 +16,15 @@ import bo.umss.app.in.referral.StockReferral;
 
 public class StockReferralTest {
 
-	public CodeProduct notProvidedProvider;
-	public LocalDate date;
+	private CodeProduct notProvidedProvider;
+	private LocalDate date;
+	private final TestObjectBucket testObjectBucket = new TestObjectBucket();
 
 	@BeforeEach
 	public void setUp() {
-		Line line = Line.at(Line.CODE_PLATE, Line.NAME_PLATE);
-		notProvidedProvider = NotProvidedProvider.at("PLA-1", "bowl8 a round plate of porcelain", line);
-		date = LocalDate.of(2024, 03, 15);
+		Line line = Line.at(TestObjectBucket.PLATE_NAME);
+		notProvidedProvider = NotProvidedProvider.at(TestObjectBucket.BOWL8_CODE, TestObjectBucket.BOWL8_DESCRIPTION, line);
+		date = testObjectBucket.createDate();
 	}
 
 	@Test
