@@ -1,21 +1,70 @@
 package bo.umss.app.in.price;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import bo.umss.app.in.TestObjectBucket;
 import bo.umss.app.in.coin.Coin;
+import bo.umss.app.in.discount.Discount;
 
 public class PriceTest {
 
-	@Test
-	public void canNotBeLessThanZeroValue() {
-		Coin coin = Coin.at(Coin.CODE_USA, Coin.NAME_USA);
-		assertThrows(RuntimeException.class, () -> Price.at(0, coin), Price.VALUE_CAN_NOT_BE_LESS_ZERO);
+	private Coin coin;
+
+	@BeforeEach
+	public void setUp() {
+		coin = Coin.at(TestObjectBucket.CODE_USA, TestObjectBucket.NAME_USA);
 	}
 
 	@Test
-	public void canNotBeNullCoin() {
-		assertThrows(RuntimeException.class, () -> Price.at(50, null), Price.COIN_CAN_NOT_BE_NULL);
+	public void canNotBeLessThanZeroValue() {
+		assertThrows(RuntimeException.class, () -> Price.at(-3.0, coin), Price.VALUE_CAN_NOT_BE_LESS_ZERO);
+	}
+
+	@Test
+	public void canNotEqualZeroValue() {
+		assertThrows(RuntimeException.class, () -> Price.at(0.0, coin), Price.VALUE_CAN_NOT_BE_LESS_ZERO);
+	}
+
+	@Test
+	public void verifyValue() {
+		Price price = Price.at(2.5, coin);
+
+		assertTrue(price.compareValueLessThanPotentialValue(3));
+	}
+
+	@Test
+	public void verifySendValue() {
+		Price price = Price.at(2.5, coin);
+
+		assertTrue(price.compareValue(2.5));
+	}
+
+	@Test
+	public void addTwoPriceSale() {
+		Price priceOne = Price.at(5.5, coin);
+		Price priceTwo = Price.at(3.5, coin);
+
+		assertEquals(9.0, priceOne.addWithOtherPrice(priceTwo));
+	}
+
+	@Test
+	public void verifyZeroDiscount() {
+		Price total = Price.at(50.0, coin);
+		Discount discount = Discount.at(0);
+
+		assertTrue(total.applyDiscount(discount).compareValue(50.0));
+	}
+
+	@Test
+	public void verifyOperationDiscount() {
+		Price total = Price.at(50.0, coin);
+		Discount discount = Discount.at(20);
+
+		assertTrue(total.applyDiscount(discount).compareValue(30.0));
 	}
 }

@@ -3,14 +3,13 @@ package bo.umss.app.in.product;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import bo.umss.app.in.Transaction;
-import bo.umss.app.in.buy.Buy;
+import bo.umss.app.in.StockTransaction;
+import bo.umss.app.in.buy.StockBuy;
 import bo.umss.app.in.changePrice.ChangePrice;
 import bo.umss.app.in.codeProduct.CodeProduct;
 import bo.umss.app.in.price.Price;
-import bo.umss.app.in.referral.Referral;
+import bo.umss.app.in.referral.StockReferral;
 import bo.umss.app.in.stock.Stock;
 
 public class Product {
@@ -27,7 +26,7 @@ public class Product {
 	private Price priceCost;
 	private Price priceSale;
 	private List<ChangePrice> listChangePriceCost;
-	private List<Transaction> listTransaction;
+	private List<StockTransaction> listTransaction;
 
 	public Product(CodeProduct codeProduct, Stock stock, Price priceCost, Price priceSale) {
 		this.codeProduct = codeProduct;
@@ -79,8 +78,14 @@ public class Product {
 		return listChangePriceCost;
 	}
 
-	public List<Transaction> getListTransaction() {
+	public List<StockTransaction> getListTransaction() {
 		return listTransaction;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Product potentialProduct = (Product) obj;
+		return codeProduct.compareAnotherCode(potentialProduct.getCodeProduct());
 	}
 
 	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
@@ -91,14 +96,10 @@ public class Product {
 		return null != codeProduct;
 	}
 
-	public void addBuy(Buy buy) {
-		if (stock.amountGreatherThanZero()) {
-			Optional<Transaction> buyOptional = listTransaction.stream().filter(item -> item instanceof Buy
-					&& ((Buy) item).getCodeProduct().compareAnotherCode(buy.getCodeProduct())).findAny();
-			if (buyOptional.isPresent())
-				throw new RuntimeException(Product.CODE_PRODUCT_DUPLICATE);
+	public void addBuy(StockBuy buy) {
+		if (stock.amountGreaterThanZero()) {
 
-			if(stock.verifyPotentialValueGreatherZero(buy.getAmount())) {
+			if (stock.verifyPotentialValueGreaterZero(buy.getAmount())) {
 				stock.todoIncreaseStock(buy.getAmount());
 			}
 			listTransaction.add(buy);
@@ -121,7 +122,7 @@ public class Product {
 	}
 
 	public Boolean canDecreaseStock(Integer amount) {
-		return stock.verifyValueGreatherThanPotentialValue(amount);
+		return stock.verifyValueGreaterThanPotentialValue(amount);
 	}
 
 	public void todoDecrementStock(Integer amount) {
@@ -129,13 +130,21 @@ public class Product {
 	}
 
 	public void changeMesurementStock(Stock potentialStock) {
-		if(stock.compareValue(potentialStock.getValue())) {
+		if (stock.compareValue(potentialStock.getValue())) {
 			setStock(potentialStock);
 		}
 	}
 
-	public void addReferral(Referral referral) {
+	public void addReferral(StockReferral referral) {
 		todoDecrementStock(referral.getAmount());
 		listTransaction.add(referral);
+	}
+
+	public Price calculateSubtotalWithCoin() {
+		return Price.at(priceSale.getValue() * stock.getValue(), priceSale.getCoin());
+	}
+
+	public Price generateSubtotal() {
+		return Price.at(priceSale.getValue() * stock.getValue(), priceSale.getCoin());
 	}
 }
