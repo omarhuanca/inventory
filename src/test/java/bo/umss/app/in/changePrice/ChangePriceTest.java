@@ -25,7 +25,6 @@ public class ChangePriceTest {
 		coin = Coin.at(TestObjectBucket.CODE_USA);
 		Measurement measurement = Measurement.at(TestObjectBucket.CODE_PZA);
 		stock = Stock.at(2, measurement);
-
 	}
 
 	@Test

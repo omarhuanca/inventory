@@ -20,4 +20,8 @@ public class Line {
 	public String getName() {
 		return name;
 	}
+
+	public Boolean compareOtherName(String potentialName) {
+		return name.equalsIgnoreCase(potentialName);
+	}
 }
