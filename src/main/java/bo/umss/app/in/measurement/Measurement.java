@@ -20,4 +20,8 @@ public class Measurement {
 	public String getCode() {
 		return code;
 	}
+
+	public Boolean equals(Measurement anotherMeasurement) {
+		return code.equalsIgnoreCase(anotherMeasurement.getCode());
+	}
 }
