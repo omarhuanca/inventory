@@ -2,7 +2,7 @@ package bo.umss.app.in.coin;
 
 public class Coin {
 
-	public static final String CODE_CAN_NOT_BE_EMPTY = "Code can not be blank";
+	public static final String CODE_CAN_NOT_BE_BLANK = "Code can not be blank";
 
 	private String code;
 
@@ -12,7 +12,7 @@ public class Coin {
 
 	public static Coin at(String code) {
 		if (code.isEmpty())
-			throw new RuntimeException(CODE_CAN_NOT_BE_EMPTY);
+			throw new RuntimeException(CODE_CAN_NOT_BE_BLANK);
 
 		return new Coin(code);
 	}
@@ -23,5 +23,9 @@ public class Coin {
 
 	public Boolean compareCode(Coin potentialCoin) {
 		return code.equals(potentialCoin.getCode());
+	}
+
+	public Boolean compareOtherCode(String potentialCode) {
+		return code.equalsIgnoreCase(potentialCode);
 	}
 }
