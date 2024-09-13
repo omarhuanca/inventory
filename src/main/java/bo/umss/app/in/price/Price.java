@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bo.umss.app.in.coin.Coin;
-import bo.umss.app.in.discount.Discount;
 
 public class Price {
 
@@ -62,14 +61,4 @@ public class Price {
 	public Double addWithOtherPrice(Price potentialPrice) {
 		return value + potentialPrice.getValue();
 	}
-
-	public Price applyDiscount(Discount discount) {
-		Price response = Price.at(value, coin);
-		if (value > discount.getValue()) {
-			response = Price.at(value - discount.getValue(), coin);
-		}
-
-		return response;
-	}
-
 }

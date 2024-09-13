@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import bo.umss.app.in.TestObjectBucket;
 import bo.umss.app.in.coin.Coin;
-import bo.umss.app.in.discount.Discount;
 
 public class PriceTest {
 
@@ -50,21 +49,5 @@ public class PriceTest {
 		Price priceTwo = Price.at(3.5, coin);
 
 		assertEquals(9.0, priceOne.addWithOtherPrice(priceTwo));
-	}
-
-	@Test
-	public void verifyZeroDiscount() {
-		Price total = Price.at(50.0, coin);
-		Discount discount = Discount.at(0);
-
-		assertTrue(total.applyDiscount(discount).compareValue(50.0));
-	}
-
-	@Test
-	public void verifyOperationDiscount() {
-		Price total = Price.at(50.0, coin);
-		Discount discount = Discount.at(20);
-
-		assertTrue(total.applyDiscount(discount).compareValue(30.0));
 	}
 }
