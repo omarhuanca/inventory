@@ -45,7 +45,7 @@ public class Price {
 	}
 
 	public Map<Coin, Price> addPriceSumarize(Price potentialPrice) {
-		Map<Coin, Price> result = new HashMap<>();
+		Map<Coin, Price> result = new HashMap<Coin, Price>();
 		if (coin.compareCode(potentialPrice.getCoin())) {
 			result.put(coin, Price.at(value + potentialPrice.getValue(), coin));
 		} else {

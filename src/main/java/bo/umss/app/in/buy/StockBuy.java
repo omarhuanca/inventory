@@ -3,7 +3,7 @@ package bo.umss.app.in.buy;
 import java.time.LocalDate;
 
 import bo.umss.app.in.StockTransaction;
-import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.product.Product;
 
 public class StockBuy extends StockTransaction {
 
@@ -11,16 +11,16 @@ public class StockBuy extends StockTransaction {
 
 	private String description;
 
-	public StockBuy(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
-		this.codeProduct = codeProduct;
+	public StockBuy(Product codeProduct, Integer amount, LocalDate localDate, String description) {
+		this.product = codeProduct;
 		this.amount = amount;
 		this.localDate = localDate;
 		this.description = description;
 	}
 
-	public static StockBuy at(CodeProduct codeProduct, Integer amount, LocalDate localDate, String description) {
-		if (null == codeProduct)
-			throw new RuntimeException(StockTransaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
+	public static StockBuy at(Product product, Integer amount, LocalDate localDate, String description) {
+		if (null == product)
+			throw new RuntimeException(StockTransaction.PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
 			throw new RuntimeException(StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 		if (null == localDate)
@@ -28,12 +28,12 @@ public class StockBuy extends StockTransaction {
 		if (description.isEmpty())
 			throw new RuntimeException(StockBuy.DESCRIPTION_CAN_NOT_BE_BLANK);
 
-		return new StockBuy(codeProduct, amount, localDate, description);
+		return new StockBuy(product, amount, localDate, description);
 	}
 
 	@Override
-	public CodeProduct getCodeProduct() {
-		return codeProduct;
+	public Product getProduct() {
+		return product;
 	}
 
 	@Override

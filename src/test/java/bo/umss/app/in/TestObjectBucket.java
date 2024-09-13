@@ -2,13 +2,12 @@ package bo.umss.app.in;
 
 import java.time.LocalDate;
 
-import bo.umss.app.in.codeProduct.CodeProduct;
-import bo.umss.app.in.codeProduct.NotProvidedProvider;
 import bo.umss.app.in.coin.Coin;
 import bo.umss.app.in.line.Line;
 import bo.umss.app.in.measurement.Measurement;
 import bo.umss.app.in.price.Price;
 import bo.umss.app.in.product.Product;
+import bo.umss.app.in.provider.Provider;
 import bo.umss.app.in.stock.Stock;
 
 public class TestObjectBucket {
@@ -35,15 +34,14 @@ public class TestObjectBucket {
 
 	public Product createPlate() {
 		Line line = Line.at(PLATE_NAME);
-		CodeProduct notProvidedProvider = NotProvidedProvider.at(PLATE_CODE, "PLATO ZETA BOWL 8 PORCELANA CUADRADO",
-				line);
 		Coin coin = Coin.at(CODE_BS);
 		Price priceCost = Price.at(5.0, coin);
 		Price priceSale = Price.at(10.0, coin);
 		Measurement measurement = createMeasurement();
 		Stock stock = Stock.at(10, measurement);
+		Provider provider = Provider.at(JUAN_PEREZ_NAME, JUAN_PEREZ_CELLPHONE);
 
-		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
+		return Product.at(PLATE_CODE, "PLATO ZETA BOWL 8 PORCELANA CUADRADO", stock, priceCost, priceSale, line, provider);
 	}
 
 	public Measurement createMeasurement() {
@@ -52,15 +50,18 @@ public class TestObjectBucket {
 
 	public Product createCup() {
 		Line line = Line.at(CUP_NAME);
-		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at(CUP_CODE, "TAZA ISAYLIN PORCELANA RECTO",
-				line);
 		Coin coin = Coin.at(CODE_BS);
 		Price priceCost = Price.at(8.0, coin);
 		Price priceSale = Price.at(16.0, coin);
 		Measurement measurement = createMeasurement();
 		Stock stock = Stock.at(10, measurement);
+		Provider provider = Provider.at(JUAN_PEREZ_NAME, JUAN_PEREZ_CELLPHONE);
 
-		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
+		return Product.at(CUP_CODE, CUP_PURCHASE_DESCRIPTION, stock, priceCost, priceSale, line, provider);
+	}
+
+	public Provider createDefaultProvider() {
+		return Provider.at(JUAN_PEREZ_NAME, JUAN_PEREZ_CELLPHONE);
 	}
 
 	public LocalDate createDate() {
@@ -69,13 +70,13 @@ public class TestObjectBucket {
 
 	public Product createPot() {
 		Line line = Line.at(POT_NAME);
-		NotProvidedProvider notProvidedProvider = NotProvidedProvider.at(POT_CODE, "OLLA TRILLIUM INOX 3 PCS", line);
 		Coin coin = Coin.at(CODE_USA);
 		Price priceCost = Price.at(205.0, coin);
 		Price priceSale = Price.at(246.0, coin);
 		Measurement measurement = createMeasurement();
 		Stock stock = Stock.at(80, measurement);
+		Provider provider = Provider.at(JUAN_PEREZ_NAME, JUAN_PEREZ_CELLPHONE);
 
-		return Product.at(notProvidedProvider, stock, priceCost, priceSale);
+		return Product.at(POT_CODE, "OLLA TRILLIUM INOX 3 PCS", stock, priceCost, priceSale, line, provider);
 	}
 }
