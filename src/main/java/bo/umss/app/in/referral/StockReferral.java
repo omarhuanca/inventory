@@ -3,30 +3,30 @@ package bo.umss.app.in.referral;
 import java.time.LocalDate;
 
 import bo.umss.app.in.StockTransaction;
-import bo.umss.app.in.codeProduct.CodeProduct;
+import bo.umss.app.in.product.Product;
 
 public class StockReferral extends StockTransaction {
 
-	public StockReferral(CodeProduct codeProduct, Integer amount, LocalDate localDate) {
-		this.codeProduct = codeProduct;
+	public StockReferral(Product product, Integer amount, LocalDate localDate) {
+		this.product = product;
 		this.amount = amount;
 		this.localDate = localDate;
 	}
 
-	public static StockReferral at(CodeProduct codeProduct, Integer amount, LocalDate localDate) {
-		if (null == codeProduct)
-			throw new RuntimeException(StockTransaction.CODE_PRODUCT_CAN_NOT_BE_NULL);
+	public static StockReferral at(Product product, Integer amount, LocalDate localDate) {
+		if (null == product)
+			throw new RuntimeException(StockTransaction.PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
 			throw new RuntimeException(StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
 		if(null == localDate)
 			throw new RuntimeException(StockTransaction.DATE_CAN_NOT_BE_NULL);
 
-		return new StockReferral(codeProduct, amount, localDate);
+		return new StockReferral(product, amount, localDate);
 	}
 
 	@Override
-	public CodeProduct getCodeProduct() {
-		return codeProduct;
+	public Product getProduct() {
+		return product;
 	}
 
 	@Override

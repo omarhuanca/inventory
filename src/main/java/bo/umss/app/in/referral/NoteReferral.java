@@ -14,7 +14,7 @@ public class NoteReferral extends NoteTransaction {
 
 	public NoteReferral(LocalDate date) {
 		this.date = date;
-		setProductOutput = new HashSet<>();
+		setProductOutput = new HashSet<Product>();
 	}
 
 	public static NoteReferral at(LocalDate date) {
@@ -57,7 +57,7 @@ public class NoteReferral extends NoteTransaction {
 
 	@Override
 	public Map<String, Price> calculateTotal() {
-		Map<String, Price> mapResponse = new HashMap<>();
+		Map<String, Price> mapResponse = new HashMap<String, Price>();
 		for (Product productOutput : setProductOutput) {
 			Price subtotal = productOutput.generateSubtotal();
 			Double sumarizePrice = subtotal.getValue();

@@ -24,7 +24,7 @@ public class NoteSale extends NoteTransaction {
 		this.date = date;
 		this.name = name;
 		this.invoiceNumber = invoiceNumber;
-		setProductOutput = new HashSet<>();
+		setProductOutput = new HashSet<Product>();
 	}
 
 	public static NoteSale at(LocalDate date, String name, String nit, String invoiceNumber) {
@@ -81,7 +81,7 @@ public class NoteSale extends NoteTransaction {
 
 	@Override
 	public Map<String, Price> calculateTotal() {
-		Map<String, Price> mapResponse = new HashMap<>();
+		Map<String, Price> mapResponse = new HashMap<String, Price>();
 		for (Product productOutput : setProductOutput) {
 			Price subtotal = productOutput.generateSubtotal();
 			Double sumarizePrice = subtotal.getValue();
