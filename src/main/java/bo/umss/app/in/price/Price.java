@@ -32,6 +32,10 @@ public class Price {
 		return value;
 	}
 
+	public void setValue(Double potentialValue) {
+		value = potentialValue;
+	}
+
 	public Coin getCoin() {
 		return coin;
 	}
@@ -55,7 +59,7 @@ public class Price {
 		return result;
 	}
 
-	public Boolean compareValue(Double potentialValue) {
+	public Boolean compareOtherValue(Double potentialValue) {
 		return value.equals(potentialValue);
 	}
 
@@ -72,4 +76,7 @@ public class Price {
 		return response;
 	}
 
+	public Boolean isNegativeValue() {
+		return 0 > value;
+	}
 }

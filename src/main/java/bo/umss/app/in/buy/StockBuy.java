@@ -11,8 +11,8 @@ public class StockBuy extends StockTransaction {
 
 	private String description;
 
-	public StockBuy(Product codeProduct, Integer amount, LocalDate localDate, String description) {
-		this.product = codeProduct;
+	public StockBuy(Product product, Integer amount, LocalDate localDate, String description) {
+		this.product = product;
 		this.amount = amount;
 		this.localDate = localDate;
 		this.description = description;

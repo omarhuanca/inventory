@@ -29,4 +29,7 @@ public class Provider {
 		return phoneNumber;
 	}
 
+	public Boolean compareAnoherName(String potentialName) {
+		return name.equalsIgnoreCase(potentialName);
+	}
 }

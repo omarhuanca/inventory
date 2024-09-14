@@ -50,4 +50,19 @@ public class StockTest {
 
 		assertTrue(stock.compareValue(7));
 	}
+
+	@Test
+	public void verifyValueDoesntNegative() {
+		Stock stock = Stock.at(25, measurement);
+
+		assertFalse(stock.verifyValueIsNegative());
+	}
+
+	@Test
+	public void verifyValueIsNegative() {
+		Stock stock = Stock.at(25, measurement);
+		stock.setValue(-5);
+
+		assertTrue(stock.verifyValueIsNegative());
+	}
 }

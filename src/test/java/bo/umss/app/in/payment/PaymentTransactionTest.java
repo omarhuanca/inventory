@@ -65,6 +65,7 @@ public class PaymentTransactionTest {
 	@Test
 	public void verifyNotTotalValueLessThanDiscountValue() {
 		Discount discount2 = Discount.at(15);
+
 		assertThrows(RuntimeException.class, () -> PaymentTransaction.at(total, discount2, noteReferral),
 				PaymentTransaction.TOTAL_VALUE_LESS_THAN_DISCOUNT_VALUE);
 	}
@@ -76,7 +77,7 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteReferral.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_BS);
 
-		assertTrue(priceTotal.compareValue(50.0));
+		assertTrue(priceTotal.compareOtherValue(50.0));
 	}
 
 	@Test
@@ -87,7 +88,7 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteReferral.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_BS);
 
-		assertTrue(priceTotal.compareValue(20.0));
+		assertTrue(priceTotal.compareOtherValue(20.0));
 
 	}
 
@@ -101,7 +102,7 @@ public class PaymentTransactionTest {
 		PaymentTransaction paymentTransaction = PaymentTransaction.at(priceTotal, discountTwo, noteReferral);
 		Price amountToPay = paymentTransaction.generateAmountToPay();
 
-		assertTrue(amountToPay.compareValue(40.0));
+		assertTrue(amountToPay.compareOtherValue(40.0));
 	}
 
 	@Test
@@ -117,7 +118,7 @@ public class PaymentTransactionTest {
 		PaymentTransaction paymentTransaction = PaymentTransaction.at(priceTotal, discountTwo, noteReferral);
 		Price amountToPay = paymentTransaction.generateAmountToPay();
 
-		assertTrue(amountToPay.compareValue(104.0));
+		assertTrue(amountToPay.compareOtherValue(104.0));
 	}
 
 	@Test
@@ -127,7 +128,7 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteReferral.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_USA);
 
-		assertTrue(priceTotal.compareValue(17220.0));
+		assertTrue(priceTotal.compareOtherValue(17220.0));
 	}
 
 	@Test
@@ -141,7 +142,7 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteReferral.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_BS);
 
-		assertTrue(priceTotal.compareValue(50.0));
+		assertTrue(priceTotal.compareOtherValue(50.0));
 	}
 
 	@Test
@@ -155,7 +156,7 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteReferral.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_USA);
 
-		assertTrue(priceTotal.compareValue(17220.0));
+		assertTrue(priceTotal.compareOtherValue(17220.0));
 	}
 
 	@Test
@@ -165,6 +166,6 @@ public class PaymentTransactionTest {
 		Map<String, Price> partTotal = noteSale.calculateTotal();
 		Price priceTotal = partTotal.get(TestObjectBucket.CODE_BS);
 
-		assertTrue(priceTotal.compareValue(70.0));
+		assertTrue(priceTotal.compareOtherValue(70.0));
 	}
 }

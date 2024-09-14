@@ -66,4 +66,8 @@ public class Stock {
 			value = value + potentialValue;
 		}
 	}
+
+	public Boolean verifyValueIsNegative() {
+		return 0 > value;
+	}
 }
