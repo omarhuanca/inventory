@@ -22,6 +22,8 @@ public class Product {
 	public static final String PRICE_SALE_CAN_NOT_BE_NULL = "Price sale can not be null";
 	public static final String LINE_CAN_NOT_BE_NULL = "Line can not be null";
 	public static final String PROVIDER_CAN_NOT_BE_NULL = "Provider can not be null";
+	public static final String PRICE_COST_COIN_DIFF_PRICE_SALE_COIN = "Coin diff between price cost and price sale";
+	public static final String PRICE_SALE_CHEAPER_THAN_PRICE_COST = "Price sale can not be cheaper than price cost";
 	
 	private String code;
 	private String description;
@@ -34,7 +36,8 @@ public class Product {
 	private List<StockBuy> listStockBuy;
 	private List<StockReferral> listStockReferral;
 
-	public Product(String code, String description, Stock stock, Price priceCost, Price priceSale, Line line, Provider provider) {
+	public Product(String code, String description, Stock stock, Price priceCost, Price priceSale, Line line,
+			Provider provider) {
 		this.code = code;
 		this.description = description;
 		this.stock = stock;
@@ -47,7 +50,8 @@ public class Product {
 		listStockReferral = new ArrayList<StockReferral>();
 	}
 
-	public static Product at(String code, String description, Stock stock, Price priceCost, Price priceSale, Line line, Provider provider) {
+	public static Product at(String code, String description, Stock stock, Price priceCost, Price priceSale, Line line,
+			Provider provider) {
 		if (code.isEmpty())
 			throw new RuntimeException(CODE_CAN_NOT_BE_BLANK);
 		if (description.isEmpty())
@@ -58,6 +62,10 @@ public class Product {
 			throw new RuntimeException(PRICE_COST_CAN_NOT_BE_NULL);
 		if (null == priceSale)
 			throw new RuntimeException(PRICE_SALE_CAN_NOT_BE_NULL);
+		if (!priceCost.lessThanValue(priceSale))
+			throw new RuntimeException(PRICE_SALE_CHEAPER_THAN_PRICE_COST);
+		if (!priceCost.compareOtherCoin(priceSale))
+			throw new RuntimeException(PRICE_COST_COIN_DIFF_PRICE_SALE_COIN);
 		if (null == line)
 			throw new RuntimeException(LINE_CAN_NOT_BE_NULL);
 		if (null == provider)
@@ -70,15 +78,23 @@ public class Product {
 		return code;
 	}
 
+	public void setCode(String potentialCode) {
+		code = potentialCode;
+	}
+
 	public String getDescription() {
 		return description;
+	}
+
+	public void setDescription(String potentialDescription) {
+		description = potentialDescription;
 	}
 
 	public Stock getStock() {
 		return stock;
 	}
 
-	private void setStock(Stock potentialStock) {
+	public void setStock(Stock potentialStock) {
 		stock = potentialStock;
 	}
 
@@ -94,12 +110,24 @@ public class Product {
 		return priceSale;
 	}
 
+	public void setPriceSale(Price potentialPriceSale) {
+		priceSale = potentialPriceSale;
+	}
+
 	public Line getLine() {
 		return line;
 	}
 
+	public void setLine(Line potentialLine) {
+		line = potentialLine;
+	}
+
 	public Provider getProvider() {
 		return provider;
+	}
+
+	public void setProvider(Provider potentialProvider) {
+		provider = potentialProvider;
 	}
 
 	public List<ChangePrice> getListChangePriceCost() {
@@ -110,15 +138,19 @@ public class Product {
 		return listStockBuy;
 	}
 
-	public List<StockReferral> getListStockReferral() {
+	public List<StockReferral> getListReferral() {
 		return listStockReferral;
+	}
+
+	public void setListReferral(List<StockReferral> listReferral) {
+		this.listStockReferral = listReferral;
 	}
 
 	public boolean equals(Product potentialProduct) {
 		return code.equalsIgnoreCase(potentialProduct.getCode());
 	}
 
-	public Boolean listTransactionCompareGreaterThanZero(Integer count) {
+	public Boolean listTransactionCompareGreatherThanZero(Integer count) {
 		return listStockBuy.size() > count;
 	}
 
@@ -156,7 +188,7 @@ public class Product {
 	}
 
 	public void changeMesurementStock(Stock potentialStock) {
-		if (stock.compareValue(potentialStock.getValue())) {
+		if (stock.compareOtherValue(potentialStock.getValue())) {
 			setStock(potentialStock);
 		}
 	}
@@ -172,5 +204,33 @@ public class Product {
 
 	public Price generateSubtotal() {
 		return Price.at(priceSale.getValue() * stock.getValue(), priceSale.getCoin());
+	}
+
+	public Boolean compareOtherCode(String potentialCode) {
+		return code.equalsIgnoreCase(potentialCode);
+	}
+
+	public Boolean compareOtherDescription(String potentialDescription) {
+		return description.equalsIgnoreCase(potentialDescription);
+	}
+
+	public Boolean compareStock(Stock potentialStock) {
+		return stock.equals(potentialStock);
+	}
+
+	public Boolean comparePriceSale(Price potentialPriceSale) {
+		return priceSale.equals(potentialPriceSale);
+	}
+
+	public Boolean comparePriceCost(Price potentialPriceCost) {
+		return priceCost.equals(potentialPriceCost);
+	}
+
+	public Boolean compareLine(Line potentialLine) {
+		return line.equals(potentialLine);
+	}
+
+	public Boolean compareProvider(Provider potentialProvider) {
+		return provider.equals(potentialProvider);
 	}
 }

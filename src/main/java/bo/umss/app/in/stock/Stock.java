@@ -17,7 +17,7 @@ public class Stock {
 	}
 
 	public static Stock at(Integer value, Measurement measurement) {
-		if (0 >= value)
+		if (0 > value)
 			throw new RuntimeException(VALUE_CAN_NOT_BE_LESS_THAN_ZERO);
 		if (null == measurement)
 			throw new RuntimeException(MEASUREMENT_CAN_NOT_BE_NULL);
@@ -53,7 +53,7 @@ public class Stock {
 		}
 	}
 
-	public Boolean compareValue(Integer potentialValue) {
+	public Boolean compareOtherValue(Integer potentialValue) {
 		return value.equals(potentialValue);
 	}
 
@@ -65,6 +65,10 @@ public class Stock {
 		if (value > 0) {
 			value = value + potentialValue;
 		}
+	}
+
+	public void setMeasurement(Measurement potentialMeasurement) {
+		measurement = potentialMeasurement;
 	}
 
 	public Boolean verifyValueIsNegative() {

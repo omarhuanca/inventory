@@ -58,5 +58,4 @@ public class ChangePrice {
 	public LocalDate getCurrentDate() {
 		return currentDate;
 	}
-
 }

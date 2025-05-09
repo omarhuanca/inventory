@@ -18,7 +18,7 @@ public class StockReferral extends StockTransaction {
 			throw new RuntimeException(StockTransaction.PRODUCT_CAN_NOT_BE_NULL);
 		if (0 >= amount)
 			throw new RuntimeException(StockTransaction.AMOUNT_CAN_NOT_BE_LESS_THAN_ZERO);
-		if(null == localDate)
+		if (null == localDate)
 			throw new RuntimeException(StockTransaction.DATE_CAN_NOT_BE_NULL);
 
 		return new StockReferral(product, amount, localDate);

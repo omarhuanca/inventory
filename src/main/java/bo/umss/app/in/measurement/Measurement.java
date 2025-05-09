@@ -21,7 +21,11 @@ public class Measurement {
 		return code;
 	}
 
-	public Boolean equals(Measurement anotherMeasurement) {
-		return code.equalsIgnoreCase(anotherMeasurement.getCode());
+	public boolean compareOtherCode(String potentialCode) {
+		return code.equalsIgnoreCase(potentialCode);
+	}
+
+	public void setCode(String potentialCode) {
+		code = potentialCode;
 	}
 }
