@@ -16,8 +16,6 @@ public class Provider {
 	public static Provider at(String name, String phoneNumber) {
 		if (name.isEmpty())
 			throw new RuntimeException(NAME_CAN_NOT_BE_BLANK);
-		if (phoneNumber.isEmpty())
-			throw new RuntimeException(PHONE_NUMBER_CAN_NOT_BE_BLANK);
 		return new Provider(name, phoneNumber);
 	}
 

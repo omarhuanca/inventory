@@ -123,13 +123,13 @@ public class Product {
 	}
 
 	public void addBuy(StockBuy buy) {
-		if (stock.amountGreaterThanZero()) {
+		//if (stock.amountGreaterThanZero()) {
 
-			if (stock.verifyPotentialValueGreaterZero(buy.getAmount())) {
-				stock.todoIncreaseStock(buy.getAmount());
-			}
-			listStockBuy.add(buy);
+		if (stock.verifyPotentialValueGreaterZero(buy.getAmount())) {
+			stock.todoIncreaseStock(buy.getAmount());
 		}
+		listStockBuy.add(buy);
+		//}
 	}
 
 	public Boolean lessThanValuePriceCost(Price potentialPriceCost) {
@@ -162,15 +162,15 @@ public class Product {
 	}
 
 	public void addReferral(StockReferral referral) {
-		todoDecrementStock(referral.getAmount());
+		//todoDecrementStock(referral.getAmount());
 		listStockReferral.add(referral);
 	}
 
 	public Price calculateSubtotalWithCoin() {
-		return Price.at(priceSale.getValue() * stock.getValue(), priceSale.getCoin());
+		return Price.at((double) (priceSale.getValue() * stock.getValue()), priceSale.getCoin());
 	}
 
 	public Price generateSubtotal() {
-		return Price.at(priceSale.getValue() * stock.getValue(), priceSale.getCoin());
+		return Price.at((double) priceSale.getValue() * stock.getValue(), priceSale.getCoin());
 	}
 }

@@ -138,7 +138,7 @@ public class ProductTest {
 
 		assertTrue(plate.getStock().compareValue(15));
 	}
-
+	
 	@Test
 	public void verifyStockAfterAddReferral() {
 		StockReferral referral = StockReferral.at(plate, 5, date);

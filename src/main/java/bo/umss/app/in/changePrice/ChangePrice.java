@@ -31,10 +31,12 @@ public class ChangePrice {
 			throw new RuntimeException(NEW_PRICE_CAN_NOT_BE_NULL);
 		if (null == oldPrice)
 			throw new RuntimeException(OLD_PRICE_CAN_NOT_BE_NULL);
+		/*
 		if (newPrice.lessThanValue(oldPrice))
 			throw new RuntimeException(NEW_PRICE_CAN_NOT_LESS_THAN_OLD_PRICE);
 		if (!newPrice.getCoin().compareCode(oldPrice.getCoin()))
 			throw new RuntimeException(NEW_PRICE_DOES_NOT_HAS_DIFF_MEASUREMENT_TO_OLD_PRICE);
+		*/
 		if (null == stock)
 			throw new RuntimeException(STOCK_CAN_NOT_BE_NULL);
 		if (null == currentDate)
