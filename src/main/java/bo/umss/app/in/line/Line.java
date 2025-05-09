@@ -21,6 +21,10 @@ public class Line {
 		return name;
 	}
 
+	public void setName(String potentialName) {
+		name = potentialName;
+	}
+
 	public Boolean compareOtherName(String potentialName) {
 		return name.equalsIgnoreCase(potentialName);
 	}

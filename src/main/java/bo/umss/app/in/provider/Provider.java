@@ -32,4 +32,12 @@ public class Provider {
 	public Boolean compareAnoherName(String potentialName) {
 		return name.equalsIgnoreCase(potentialName);
 	}
+
+	public void setPhoneNumber(String potentialPhoneNumber) {
+		phoneNumber = potentialPhoneNumber;
+	}
+
+	public void setName(String potentialName) {
+		name = potentialName;
+	}
 }

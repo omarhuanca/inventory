@@ -20,5 +20,4 @@ public class Discount {
 	public Integer getValue() {
 		return value;
 	}
-
 }

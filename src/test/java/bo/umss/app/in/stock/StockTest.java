@@ -21,7 +21,8 @@ public class StockTest {
 
 	@Test
 	public void canNotBeLessThanZeroValue() {
-		assertThrows(RuntimeException.class, () -> Stock.at(0, measurement), Stock.VALUE_CAN_NOT_BE_LESS_THAN_ZERO);
+		assertThrows(RuntimeException.class, () -> Stock.at(-1, measurement),
+				Stock.VALUE_CAN_NOT_BE_LESS_THAN_ZERO);
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class StockTest {
 		Stock stock = Stock.at(10, measurement);
 		stock.todoDecrementStock(3);
 
-		assertTrue(stock.compareValue(7));
+		assertTrue(stock.compareOtherValue(7));
 	}
 
 	@Test

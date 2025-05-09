@@ -28,4 +28,8 @@ public class Coin {
 	public Boolean compareOtherCode(String potentialCode) {
 		return code.equalsIgnoreCase(potentialCode);
 	}
+
+	public void setCode(String potentialCode) {
+		code = potentialCode;
+	}
 }

@@ -44,7 +44,7 @@ public class NoteReferral extends NoteTransaction {
 		return setProductOutput.size() > potentialSize;
 	}
 
-	@Override
+@Override
 	public Boolean addProduct(Product potentialProduct, Integer potentialAmount) {
 		Boolean response = Boolean.FALSE;
 		if (potentialProduct.canDecreaseStock(potentialAmount)) {
@@ -70,6 +70,5 @@ public class NoteReferral extends NoteTransaction {
 		}
 
 		return mapResponse;
-	}
-
+	}	
 }

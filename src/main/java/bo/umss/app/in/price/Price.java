@@ -20,7 +20,7 @@ public class Price {
 	}
 
 	public static Price at(Double value, Coin coin) {
-		if (value <= 0)
+		if (0 >= value)
 			throw new RuntimeException(VALUE_CAN_NOT_BE_LESS_ZERO);
 		if (null == coin)
 			throw new RuntimeException(COIN_CAN_NOT_BE_NULL);
@@ -40,8 +40,8 @@ public class Price {
 		return coin;
 	}
 
-	public Boolean lessThanValue(Price potentialPriceCost) {
-		return value < potentialPriceCost.getValue();
+	public Boolean lessThanValue(Price potentialPrice) {
+		return value < potentialPrice.getValue();
 	}
 
 	public Boolean compareValueLessThanPotentialValue(Integer potentialValue) {
@@ -78,5 +78,13 @@ public class Price {
 
 	public Boolean isNegativeValue() {
 		return 0 > value;
+	}
+
+	public void setCoin(Coin potentialCoin) {
+		coin = potentialCoin;
+	}
+
+	public Boolean compareOtherCoin(Price potentialPrice) {
+		return coin.compareCode(potentialPrice.getCoin());
 	}
 }

@@ -13,10 +13,12 @@ import bo.umss.app.in.measurement.Measurement;
 public class MeasurementTest {
 
 	private TestObjectBucket testObjectBucket;
+	private Measurement potentialMeasurement;
 
 	@BeforeEach
 	public void setUp() {
 		testObjectBucket = new TestObjectBucket();
+		potentialMeasurement = testObjectBucket.createMeasurementPiece();
 	}
 
 	@Test
@@ -25,18 +27,13 @@ public class MeasurementTest {
 	}
 
 	@Test
-	public void verifyWrongCompare() {
-		Measurement potentialMeasurement = testObjectBucket.createMeasurement();
-		Measurement potentialAnotherMeasurement = Measurement.at(TestObjectBucket.CODE_DOC);
-
-		assertFalse(potentialMeasurement.equals(potentialAnotherMeasurement));
+	public void verifyCompareCodeIsCorrect() {
+		assertTrue(potentialMeasurement.compareOtherCode(TestObjectBucket.CODE_PZA));
 	}
 
 	@Test
-	public void verifyCorrectCompare() {
-		Measurement potentialMeasurement = testObjectBucket.createMeasurement();
-		Measurement potentialAnotherMeasurement = Measurement.at(TestObjectBucket.CODE_PZA);
-
-		assertTrue(potentialMeasurement.equals(potentialAnotherMeasurement));
+	public void verifyCompareCodeIsWrong() {
+		potentialMeasurement.setCode("t");
+		assertFalse(potentialMeasurement.compareOtherCode(TestObjectBucket.CODE_PZA));
 	}
 }

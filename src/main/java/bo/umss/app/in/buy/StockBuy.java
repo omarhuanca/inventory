@@ -9,6 +9,12 @@ public class StockBuy extends StockTransaction {
 
 	public static final String DESCRIPTION_CAN_NOT_BE_BLANK = "Description can not be empty";
 
+	private Product product;
+
+	private Integer amount;
+
+	private LocalDate localDate;
+
 	private String description;
 
 	public StockBuy(Product product, Integer amount, LocalDate localDate, String description) {
